@@ -1,0 +1,99 @@
+packages:
+  - dplyr
+  - tidyr
+  - ggplot2
+
+sources:
+  - R
+
+plot_options:
+  rect35:
+    width: 5
+    height: 4
+  square8:
+    width: 8
+    height: 8
+
+targets:
+  all:
+    depends:
+      - figures/raw_answers.pdf
+      - figures/cv_plot.pdf
+      - figures/stack_plot.pdf
+      - figures/adaptive_capacity.pdf
+      - figures/community.pdf
+      - figures/raw_diffanswers.pdf
+      - figures/community_diff.pdf
+
+# ------- data --------------------------
+
+  compiled_data:
+    command: compile_data(answers_path = I("raw_data/expert_answers.csv"),
+                          metadata_path = I("raw_data/metadata.csv"))
+    cleanup_level: purge
+    check: exists
+
+  raw_answers:
+    command: extract_raw_answers(compiled_data)
+    cleanup_level: purge
+
+  raw_differences:
+    command: extract_raw_differences(raw_answers)
+    cleanup_level: purge
+
+  CV_estimates:
+    command: Calculate_CV(raw_answers)
+    cleanup_level: purge
+    
+  adapt_capt:
+    command: adaptive_capacity(raw_answers)
+    cleanup_level: purge
+    
+  agreement:
+    command: direction_agreement(raw_answers)
+    cleanup_level: purge
+    
+  community_data:
+    command: extract_community(compiled_data)
+    cleanup_level: purge
+    
+  comm_differences:
+    command: extract_comm_differences(community_data)
+    cleanup_level: purge
+    
+# ------- plots --------------------------  
+
+  figures/raw_answers.pdf:
+    command: plot_raw_answers(raw_answers)
+    plot: square8
+    cleanup_level: purge
+    
+  figures/raw_diffanswers.pdf:
+    command: plot_raw_diff(raw_differences)
+    plot: square8
+    cleanup_level: purge
+
+  figures/cv_plot.pdf:
+    command: plot_cv(CV_estimates)
+    plot: square8
+    cleanup_level: purge
+    
+  figures/stack_plot.pdf:
+    command: plot_stack(agreement)
+    plot: square8
+    cleanup_level: purge
+    
+  figures/adaptive_capacity.pdf:
+    command: plot_adaptive_capacity(adapt_capt)
+    plot: square8
+    cleanup_level: purge
+
+  figures/community.pdf:
+    command: plot_community(community_data)
+    plot: rect35
+    cleanup_level: purge
+    
+  figures/community_diff.pdf:
+    command: plot_comm_diff(comm_differences)
+    plot: rect35
+    cleanup_level: purge

@@ -1,0 +1,156 @@
+Q_type,Q_ID,Name,Community,State,Answer,Grps_discussed
+Species,QI_136,Acaena novae-zelandiae,woodland,%cover now,NA,1
+Species,QI_161,Acaena novae-zelandiae,woodland,%cover future,NA,1
+Species,QI_32,Aciphylla glacialis,grassland,%cover now,NA,2
+Species,QI_52,Aciphylla glacialis,grassland,%cover future,NA,2
+Species,QI_40,Agrostis muelleriana,snowpatch,%cover now,NA,2
+Species,QI_60,Agrostis muelleriana,snowpatch,%cover future,NA,2
+Species,QI_33,Agrostis venusta,grassland,%cover now,NA,2
+Species,QI_53,Agrostis venusta,grassland,%cover future,NA,2
+Species,QI_48,Asperula gunnii,woodland,%cover now,NA,0
+Species,QI_68,Asperula gunnii,woodland,%cover future,NA,0
+Species,QI_130,Astelia alpina,wetland,%cover now,NA,1
+Species,QI_155,Astelia alpina,wetland,%cover future,NA,1
+Calibration,CAL_25,Baeckea gunniana,wetland,%cover in the past,9.9,2
+Species,QI_128,Baeckea gunniana,wetland,%cover now,NA,2
+Species,QI_153,Baeckea gunniana,wetland,%cover future,NA,2
+Species,QI_126,Caltha introloba,snowpatch,%cover now,NA,2
+Species,QI_151,Caltha introloba,snowpatch,%cover future,NA,2
+Species,QI_116,Carex breviculmis,grassland,%cover now,NA,2
+Species,QI_141,Carex breviculmis,grassland,%cover future,NA,2
+Species,QI_44,Carex gaudichaudina,wetland,%cover now,NA,2
+Species,QI_64,Carex gaudichaudina,wetland,%cover future,NA,2
+Species,QI_77,Carex hebes,snowpatch,%cover now,NA,2
+Species,QI_93,Carex hebes,snowpatch,%cover future,NA,2
+Calibration,CAL_11,Carpha alpina,wetland,range,700,2
+Species,QI_43,Carpha alpina,wetland,%cover now,NA,2
+Species,QI_63,Carpha alpina,wetland,%cover future,NA,2
+Species,QI_125,Celmisia costiniana,snowpatch,%cover now,NA,2
+Species,QI_150,Celmisia costiniana,snowpatch,%cover future,NA,2
+Species,QI_117,Celmisia pugioniformis,grassland,%cover now,NA,2
+Species,QI_142,Celmisia pugioniformis,grassland,%cover future,NA,2
+Species,QI_71,Craspedia aurantia,grassland,%cover now,NA,2
+Species,QI_87,Craspedia aurantia,grassland,%cover future,NA,2
+Species,QI_50,Dianella tasmanica,woodland,%cover now,NA,2
+Species,QI_70,Dianella tasmanica,woodland,%cover future,NA,2
+Species,QI_80,Drosera arcturi,wetland,%cover now,NA,0
+Species,QI_96,Drosera arcturi,wetland,%cover future,NA,0
+Species,QI_46,Empodisma minus,wetland,%cover now,NA,2
+Species,QI_66,Empodisma minus,wetland,%cover future,NA,2
+Species,QI_131,Epacris paludosa,wetland,%cover now,NA,2
+Species,QI_156,Epacris paludosa,wetland,%cover future,NA,2
+Species,QI_133,Epacris petrophila,wetland,%cover now,NA,2
+Species,QI_158,Epacris petrophila,wetland,%cover future,NA,2
+Calibration,CAL_13,Eucalyptus pauciflora,woodland,range,425,2
+Species,QI_49,Eucalyptus pauciflora,woodland,%cover now,NA,0
+Species,QI_69,Eucalyptus pauciflora,woodland,%cover future,NA,0
+Species,QI_78,Ewartia nubigena,snowpatch,%cover now,NA,0
+Species,QI_94,Ewartia nubigena,snowpatch,%cover future,NA,0
+Species,QI_112,Gentianella muelleriana,grassland,%cover now,NA,2
+Species,QI_137,Gentianella muelleriana,grassland,%cover future,NA,2
+Species,QI_82,Goodenia hederacea,woodland,%cover now,NA,2
+Species,QI_98,Goodenia hederacea,woodland,%cover future,NA,2
+Calibration,CAL_21,Grevillea australis,heathland,%cover in the past,10.8,2
+Species,QI_36,Grevillea australis,heathland,%cover now,NA,2
+Species,QI_56,Grevillea australis,heathland,%cover future,NA,2
+Species,QI_37,Hovea montana,heathland,%cover now,NA,2
+Species,QI_57,Hovea montana,heathland,%cover future,NA,2
+Species,QI_74,Kunzea muelleri,heathland,%cover now,NA,0
+Species,QI_90,Kunzea muelleri,heathland,%cover future,NA,0
+Species,QI_114,Leptorhynchos squamatus,grassland,%cover now,NA,2
+Species,QI_139,Leptorhynchos squamatus,grassland,%cover future,NA,2
+Species,QI_75,Leucopogon montanus,heathland,%cover now,NA,2
+Species,QI_91,Leucopogon montanus,heathland,%cover future,NA,2
+Species,QI_41,Luzula acutifolia,snowpatch,%cover now,NA,2
+Species,QI_61,Luzula acutifolia,snowpatch,%cover future,NA,2
+Calibration,CAL_9,Montia australasica,snowpatch,range,480,2
+Species,QI_39,Montia australasica,snowpatch,%cover now,NA,2
+Species,QI_59,Montia australasica,snowpatch,%cover future,NA,2
+Community,QI_103,NA NA,feldmark,%cover future,NA,2
+Community,QI_104,NA NA,snowpatch,%cover future,NA,2
+Community,QI_105,NA NA,grassland/herbfield,%cover future,NA,2
+Community,QI_106,NA NA,subalpine woodland,%cover future,NA,2
+Community,QI_107,NA NA,dry heathland,%cover future,NA,2
+Community,QI_108,NA NA,wetland complex,%cover future,NA,2
+Community,QI_109,NA NA,bog,%cover future,NA,2
+Community,QI_110,NA NA,fen,%cover future,NA,2
+Community,QI_111,NA NA,wet tussock grassland,%cover future,NA,2
+Community,QI_103init,NA NA,feldmark,%cover now,0.1,2
+Community,QI_104init,NA NA,snowpatch,%cover now,1,2
+Community,QI_105init,NA NA,grassland/herbfield,%cover now,25,2
+Community,QI_106init,NA NA,subalpine woodland,%cover now,24,2
+Community,QI_107init,NA NA,dry heathland,%cover now,35,2
+Community,QI_108init,NA NA,wetland complex,%cover now,15,2
+Community,QI_109init,NA NA,bog,%cover now,5,2
+Community,QI_110init,NA NA,fen,%cover now,4,2
+Community,QI_111init,NA NA,wet tussock grassland,%cover now,6,2
+Species,QI_119,Olearia brevipedunculata,heathland,%cover now,NA,1
+Species,QI_144,Olearia brevipedunculata,heathland,%cover future,NA,1
+Species,QI_45,Oreobolus distichus,wetland,%cover now,NA,2
+Species,QI_65,Oreobolus distichus,wetland,%cover future,NA,2
+Species,QI_129,Oreomyrrhis ciliata,wetland,%cover now,NA,0
+Species,QI_154,Oreomyrrhis ciliata,wetland,%cover future,NA,0
+Species,QI_72,Oreomyrrhis eriopoda,grassland,%cover now,NA,0
+Species,QI_88,Oreomyrrhis eriopoda,grassland,%cover future,NA,0
+Species,QI_42,Oreomyrrhis pulvinifica,snowpatch,%cover now,NA,0
+Species,QI_62,Oreomyrrhis pulvinifica,snowpatch,%cover future,NA,0
+Calibration,CAL_19,Orites lancifolia,heathland,%cover in the past,14.5,2
+Species,QI_120,Orites lancifolia,heathland,%cover now,NA,1
+Species,QI_145,Orites lancifolia,heathland,%cover future,NA,1
+Species,QI_135,Oxylobium ellipticum,woodland,%cover now,NA,2
+Species,QI_160,Oxylobium ellipticum,woodland,%cover future,NA,2
+Calibration,CAL_15,Oxylobium ellipticum,woodland,range,425,2
+Species,QI_123,Pentachondra pumilio,heathland,%cover now,NA,2
+Species,QI_148,Pentachondra pumilio,heathland,%cover future,NA,2
+Species,QI_81,Picris angustifolius,woodland,%cover now,NA,0
+Species,QI_97,Picris angustifolius,woodland,%cover future,NA,0
+Calibration,CAL_20,Pimelea axiflora,heathland,%cover in the past,3.7,2
+Species,QI_35,Pimelea axiflora,heathland,%cover now,NA,2
+Species,QI_55,Pimelea axiflora,heathland,%cover future,NA,2
+Species,QI_134,Pimelea ligustrina,woodland,%cover now,NA,1
+Species,QI_159,Pimelea ligustrina,woodland,%cover future,NA,1
+Calibration,CAL_8,Plantago muelleri,snowpatch,range,230,2
+Species,QI_124,Plantago muelleri,snowpatch,%cover now,NA,1
+Species,QI_149,Plantago muelleri,snowpatch,%cover future,NA,1
+Species,QI_84,Poa costiniana,grassland,%cover now,NA,2
+Species,QI_100,Poa costiniana,grassland,%cover future,NA,2
+Species,QI_132,Poa costiniana,wetland,%cover now,NA,2
+Species,QI_157,Poa costiniana,wetland,%cover future,NA,2
+Calibration,CAL_7,Poa fawcettiae,snowpatch,range,500,2
+Species,QI_76,Poa fawcettiae,snowpatch,%cover now,NA,0
+Species,QI_92,Poa fawcettiae,snowpatch,%cover future,NA,0
+Calibration,CAL_16,Poa hiemata,grassland,%cover in the past,30.8,2
+Species,QI_31,Poa hiemata,grassland,%cover now,NA,2
+Species,QI_51,Poa hiemata,grassland,%cover future,NA,2
+Species,QI_86,Podocarpus lawrencei,heathland,%cover now,NA,0
+Species,QI_102,Podocarpus lawrencei,heathland,%cover future,NA,0
+Calibration,CAL_3,Podolepis robusta,grassland,range,730,2
+Species,QI_118,Podolepis robusta,grassland,%cover now,NA,0
+Species,QI_143,Podolepis robusta,grassland,%cover future,NA,0
+Species,QI_34,Prasophyllum alpestre,grassland,%cover now,NA,1
+Species,QI_54,Prasophyllum alpestre,grassland,%cover future,NA,1
+Species,QI_122,Prostanthera cuneata,heathland,%cover now,NA,2
+Species,QI_147,Prostanthera cuneata,heathland,%cover future,NA,2
+Calibration,CAL_27,Richea continentis,wetland,%cover in the past,14.9,2
+Species,QI_79,Richea continentis,wetland,%cover now,NA,2
+Species,QI_95,Richea continentis,wetland,%cover future,NA,2
+Species,QI_127,Rytidosperma nudiflorum,snowpatch,%cover now,NA,1
+Species,QI_152,Rytidosperma nudiflorum,snowpatch,%cover future,NA,1
+Calibration,CAL_17,Scleranthus biflorus,grassland,%cover in the past,2.6,2
+Species,QI_115,Scleranthus biflorus,grassland,%cover now,NA,0
+Species,QI_140,Scleranthus biflorus,grassland,%cover future,NA,0
+Species,QI_73,Senecio gunnii,grassland,%cover now,NA,2
+Species,QI_89,Senecio gunnii,grassland,%cover future,NA,2
+Species,QI_85,Sphagnum cristatum,wetland,%cover now,NA,2
+Species,QI_101,Sphagnum cristatum,wetland,%cover future,NA,2
+Calibration,CAL_14,Stylidium montanum,woodland,range,425,2
+Species,QI_47,Stylidium montanum,woodland,%cover now,NA,2
+Species,QI_67,Stylidium montanum,woodland,%cover future,NA,2
+Species,QI_83,Tasmannia xerophila,woodland,%cover now,NA,0
+Species,QI_99,Tasmannia xerophila,woodland,%cover future,NA,0
+Species,QI_121,Trisetum spicatum,heathland,%cover now,NA,0
+Species,QI_146,Trisetum spicatum,heathland,%cover future,NA,0
+Species,QI_38,Viola betonicifolia,heathland,%cover now,NA,0
+Species,QI_58,Viola betonicifolia,heathland,%cover future,NA,0
+Species,QI_113,Wahlenbergia ceracea,grassland,%cover now,NA,0
+Species,QI_138,Wahlenbergia ceracea,grassland,%cover future,NA,0
