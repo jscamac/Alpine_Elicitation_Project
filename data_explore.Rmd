@@ -1,0 +1,280 @@
+---
+title: "Exploring alpine workshop data"
+author: "J Camac"
+date: "14/07/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Load packages and source code, message=FALSE,warning=FALSE, echo=FALSE}
+# Load packages
+packages <- c("ggplot2","dplyr","tidyr")
+for (p in packages) {
+  library(p, character.only=TRUE, quietly=TRUE)
+}
+
+# Source code
+sources <- list.files("R/", full.names = TRUE)
+for (s in sources) {
+  source(s)
+}
+
+```
+
+# Trait data
+
+```{r, Load trait data, echo=FALSE}
+# Load data
+dat <- read.csv("raw_data/species_traits.csv", stringsAsFactors = FALSE)
+# Column names
+glimpse(dat)
+```
+
+Why no MAP??? Why multiple family and species columns?
+What is the difference between extent and area?
+
+\clearpage
+
+```{r examine extent, message=FALSE, warning=FALSE}
+unique(dat$Extent)
+```
+
+Extent has character values that need to be fixed.
+
+## Fix Extent
+
+```{r Fix Extent}
+dat <- dat %>%
+  dplyr::mutate(Extent = as.numeric(ifelse(Extent == "389,816.833 km2 ", "389816", Extent)))
+
+```
+
+\clearpage
+
+## Multiple family columns don't match
+
+Why do we have multiple family (Family and Family.1) columns? Do they match?
+
+```{r family column, message=FALSE, warning=FALSE}
+# Are there differences?
+family_diffs <- setdiff(dat$Family,dat$Family.1)
+
+# Yes...Shows differences between two columns
+dat %>%
+  dplyr::select(Family, Family.1) %>%
+  dplyr::filter(Family %in% family_diffs)
+```
+Ok the two family columns don't match. This isn't of fundamental importance to the analysis but should be fixed.
+
+\clearpage
+
+## Multiple species name columns don't match
+
+We also have multiple species name columns (Name and Specie.name). Do they match?
+
+```{r spp column, message=FALSE, warning=FALSE}
+# Are there differences?
+spp_diffs <- setdiff(dat$Name,dat$Species.name)
+
+# Yes...Shows differences between two columns
+dat %>%
+  dplyr::select(Name, Species.name) %>%
+  dplyr::filter(Name %in% spp_diffs)
+```
+Ok we have some differences here. Most appear to be either typos or contain sub species details. However, these should be thoroughly checked that the climate and trait data match up.
+
+\clearpage
+
+## Missing data
+QUESTION: Why don't we have Mean Annual Precipitation (MAP)?
+
+Not all information is present for all 60 species.
+The table below shows the number of species missing a value for each variable
+
+```{r Missingness, echo=FALSE, message=FALSE, warning=FALSE}
+
+n_missing <- function(x) {
+  sum(is.na(x))
+}
+dat %>% dplyr::summarise_all(.funs = n_missing) %>%
+  tidyr::gather(variable,n_missing)
+
+```
+
+\clearpage
+
+## Numeric variable ranges
+
+Now lets examine the range in continuous trait, climate, and extend variables:
+**Assumes extent is suppose to be numeric**
+
+
+```{r traitclim range, message=FALSE,warning=FALSE}
+dat %>% dplyr::summarise_if(is.numeric, funs(min =min,max =max),na.rm=TRUE) %>%
+  tidyr::gather(variable, value) %>%
+  dplyr::mutate(range_stat = ifelse(endsWith(variable, "min"), "min","max"),
+                variable = gsub('.{4}$', '', variable)) %>%
+  tidyr::spread(range_stat, value)
+```
+
+The maximum leaf area looks odd. Is it correct? Seems to be Dianella tasmanica..
+
+```{r max leaf, message=FALSE, warning=FALSE}
+dat %>%
+  filter(Leaf_area_mm2 ==max(Leaf_area_mm2, na.rm=T)) %>%
+  select(Name, Leaf_area_mm2)
+```
+\clearpage
+
+## Numeric variable histograms
+
+```{r Ranges, message=FALSE,warning=FALSE}
+
+
+numeric_dat <- dat %>% dplyr::select_if(is.numeric) %>%
+  tidyr::gather(variable, value)
+
+ggplot2::ggplot(numeric_dat, ggplot2::aes(x=variable)) +
+  ggplot2::geom_histogram(ggplot2::aes(value), fill="red",bins = 100) +
+  ggplot2::facet_wrap(~variable, scales="free",ncol = 4)
+  
+```
+Mostly looks OK though we do have a few outliers (e.g. see mean ht and LA and SLA). Are these right?
+I've highlighted the Leaf area outlier above.
+
+Lets look at height
+
+```{r max height, message=FALSE, warning=FALSE}
+dat %>%
+  filter(Mean_ht_mm ==max(Mean_ht_mm, na.rm=T)) %>%
+  select(Name, Mean_ht_mm)
+```
+
+Ah Eucalyptus... yep seems about right.
+
+\clearpage
+
+## Correlations between numeric variables
+
+```{r, echo = FALSE, messages = FALSE, fig.width=12, fig.height=8}
+numeric_vars <- names(dplyr::select_if(dat, is.numeric))
+
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor) 
+{
+    usr <- par("usr"); on.exit(par(usr)) 
+    par(usr = c(0, 1, 0, 1)) 
+    r <- abs(cor(x, y, use= "complete.obs")) 
+    txt <- format(c(r, 0.123456789), digits=digits)[1] 
+    txt <- paste(prefix, txt, sep="") 
+    if(missing(cex.cor)) cex <- 0.8/strwidth(txt) 
+ 
+    test <- cor.test(x,y, use ="complete.obs") 
+    # borrowed from printCoefmat
+    Signif <- symnum(test$p.value, corr = FALSE, na = FALSE, 
+                  cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+                  symbols = c("***", "**", "*", ".", " ")) 
+ 
+    text(0.5, 0.5, txt, cex = cex * r) 
+    text(.8, .8, Signif, cex=cex, col=2) 
+}
+pairs(x = dplyr::select_if(dat,is.numeric), upper.panel = panel.cor)
+
+```
+
+Some expected strong correlations:
+
+1.  Between Temperature, altitude and elevation variables
+2.  Strong negative relationship between lead area and max altitude, although this seems to be driven by an outlier. So dubious.
+3.  Similar dubious correlation between leaf area and mean ht.
+4.  No real strong relationships between climatic/extent variables and species physiological traits
+
+\clearpage
+
+## Examine Expert estimated Adapative Capacity vs MAT Range
+
+```{r, Load expert data and join it with trait data, messages=FALSE, warning=FALSE }
+experts <- remake::make('adapt_capt')
+glimpse(experts)
+
+# Join trait data with expert data
+compiled_dat <-dplyr::left_join(experts,dat, by="Name") %>%
+  mutate(Extent = as.numeric(Extent))
+
+```
+
+\clearpage
+
+### Scatter plots of Adaptive capacity vs Climatic/Extent variables
+
+**NOTE** The blue line on the following plots is just a simple gam smoother showing mean trends. The trend lines are just suppose to be as a visual aid of the general trend.
+
+#### log(Temperature)
+```{r, Temp,message=FALSE, warning=FALSE}
+plot_scatter(compiled_dat,
+             response = "adapt_cap", 
+             predictor = c("MAT_min", "MAT_max","MAT_range"), 
+             ncol = 1,
+            xlab = "log(Temperature variable)", 
+            ylab = "Adapt capacity -- (Future - Current)/(Future + Current)", 
+            log_x = TRUE)
+```
+
+\clearpage
+
+#### Extent and Area
+```{r, Extent/area,message=FALSE, warning=FALSE}
+plot_scatter(compiled_dat,
+             response = "adapt_cap", 
+             predictor = c("Extent","Area"), 
+             ncol = 1,
+             xlab = "log(Area or Extent variables)", 
+             ylab = "Adapt capacity -- (Future - Current)/(Future + Current)", 
+             log_x = TRUE)
+```
+
+\clearpage
+
+#### Continuous traits
+```{r, Traits, message=FALSE, warning=FALSE}
+plot_scatter(compiled_dat,
+             response = "adapt_cap", 
+             predictor = c("Leaf_area_mm2","Mean_ht_mm","SLA_mm2mg1","Diaspore_mg"), 
+             ncol = 2,
+             xlab = "log(Trait variables)", 
+             ylab = "Adapt capacity -- (Future - Current)/(Future + Current)",
+             log_x = TRUE)
+```
+
+\clearpage
+
+#### Dispersal
+```{r, Dispersal, message=FALSE, warning=FALSE}
+plot_scatter(compiled_dat,
+             response = "adapt_cap", 
+             predictor = "Log10_dispersal_dist_m", 
+             ncol = 2,
+             xlab = "log(Estimated dispersal distance)", 
+             ylab = "Adapt capacity -- (Future - Current)/(Future + Current)",
+             log_x = FALSE)
+```
+
+\clearpage
+
+#### Categorical variables
+```{r, Categorical, message=FALSE, warning=FALSE}
+plot_scatter(compiled_dat,
+             response = "adapt_cap", 
+             predictor = c("Growth_form","Perenniality",
+                           "Resprouter","Dispersal_mode","Raunkier"), 
+             ncol = 2,
+             xlab = "Categorical variables", 
+             ylab = "Adapt capacity -- (Future - Current)/(Future + Current)",
+             log_x = FALSE)
+```
+
+**NOTE** X axis with no label means there are NA's present
