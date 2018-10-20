@@ -110,5 +110,35 @@ direction_agreement <- function(data) {
                                          "negative_change")))
 }
 
+sample_compiler <- function(sample_dir, meta_path, trait_path, type ="Species") {
+  `%>%` <- magrittr::`%>%`
+  meta <- suppressMessages(readr::read_csv(meta_path))
+  traits <- suppressMessages(readr::read_csv(trait_path))
+  
+  files <- list.files(sample_dir, pattern=".txt", full.names=TRUE)
+  
+  dplyr::tbl_df(lapply(files, function(x) {
+    readr::read_csv(x,
+                    col_names = "Sample",
+                    col_types = readr::cols(Sample = "d")) %>%
+      dplyr::mutate(Weight_type = gsub("[0-9_QI.txt]", "", basename(x)),
+                    Q_ID = gsub("^[^_]*_|+.txt", "", basename(x)),
+                    Sample_ID = dplyr::row_number()) %>%
+      dplyr::select(Weight_type, Q_ID, Sample_ID, Sample)
+  }) %>% dplyr::bind_rows()) %>%
+    dplyr::left_join(meta, by="Q_ID") %>%
+    dplyr::left_join(traits, by = "Name") %>%
+    dplyr::select(-Q_ID) %>%
+    dplyr::filter(Q_type==type) %>%
+    tidyr::spread(State, Sample) %>%
+    dplyr::mutate(adapt_cap = (`%cover future` - `%cover now`)/(`%cover future` +`%cover now`)) %>%
+    dplyr::mutate(Extent = as.numeric(ifelse(Extent == "389,816.833 km2 ", "389816", Extent)),# Fix issue with extent
+                  Resprouter = dplyr::recode(Resprouter, "Y" = "Yes", "N" = "No"),
+                  Resprouter = ifelse(is.na(Resprouter), "Unknown", Resprouter), # Hack to get rid of NA
+                  Pollination = dplyr::recode(Pollination, "Not Wind" = "Other"),
+                  Dispersal_dist_m = exp(Log10_dispersal_dist_m))
+}
+
+
 
 

@@ -90,3 +90,116 @@ plot_comm_diff <- function(data, xlab = "Community", ylab = "Change in percent c
     coord_flip() + 
     theme(legend.position = c(0.7,0.15))
 }
+
+plot_scatter <- function(data, 
+                         weight_type = "PW",                         
+                         response, 
+                         predictor, 
+                         predictor_labels = NULL, 
+                         response_labels = NULL,
+                         ncol=1, 
+                         scale ="free",
+                         alpha = 0.1, 
+                         xlab = NULL,
+                         ylab = NULL,
+                         logx = FALSE,
+                         show_correlation = FALSE,
+                         zero_line = FALSE,
+                         ylimits = NULL) {
+  
+  `%>%` <- magrittr::`%>%`
+  
+  # Subset data by weight group used
+  data <- dplyr::filter(data, Weight_type==weight_type)
+  
+  # If single response vs single predictor
+  if (length(response) ==1 & length(predictor) ==1) {
+    
+    if (is.null(xlab)) {
+      xlab <- predictor
+    }  
+    if (is.null(ylab)) {
+      ylab <- response
+    }
+    
+    
+    # Calculate spearman correlation
+    
+    if(isTRUE(show_correlation)) {
+      cor_lab <- data.frame(cor = round(cor(data[[response]], data[[predictor]], 
+                                            use = "complete.obs",method="spearman"),3))
+    }
+    
+    # Show median
+    best_guess <- data[,c(response, predictor, "Name")] %>%
+      mutate_(response = response) %>%
+      group_by_("Name", predictor) %>%
+      summarise(best_guess = median(response, na.rm=T))
+    
+    p1 <- ggplot2::ggplot() +
+      ggplot2::geom_point(data = data, ggplot2::aes_string(x=predictor, y=response, colour = col_by), alpha= alpha) +
+      ggplot2::geom_point(data= best_guess, ggplot2::aes_string(x=predictor, y="best_guess"), col="red") +
+      ggplot2::ylab(ylab) +
+      ggplot2::xlab(xlab) +
+      ggplot2::theme_classic()
+  }
+  
+  # If multiple predictors but single response
+  
+  if (length(predictor) > 1 & length(response) ==1) {
+    
+    if (is.null(xlab)) {
+      xlab <- "Predictor value"
+    }  
+    
+    if (is.null(ylab)) {
+      ylab <- response
+    }
+    
+    if (is.null(predictor_labels)) {
+      predictor_labels <- predictor
+    }
+    
+    data <- data[,c(response, predictor, "Name")] %>%
+      tidyr::gather(., key="predictor_var", value="predictor_value", -c(response, Name)) %>%
+      dplyr::mutate(predictor_var = factor(predictor_var, levels=predictor, labels= predictor_labels)) %>%
+      dplyr::mutate_(response = response)
+    
+    
+    if(isTRUE(show_correlation)) {
+      cor_lab <- data %>% 
+        group_by(predictor_var) %>%
+        summarise(cor = round(cor(response, predictor_value, use = "complete.obs",method="spearman"),3))
+    }
+    
+    best_guess <- data %>%
+      group_by(Name,predictor_var, predictor_value) %>%
+      summarise(median = median(response, na.rm=T))
+    
+    p1 <- ggplot2::ggplot() +
+      ggplot2::geom_point(data = data, ggplot2::aes_string(x="predictor_value", y= response, colour = col_by), alpha= alpha) +
+      ggplot2::geom_point(data = best_guess, ggplot2::aes(x=predictor_value, y=median), col="red") +
+      ggplot2::xlab(xlab) +
+      ggplot2::ylab(ylab) +
+      ggplot2::theme_classic() +
+      ggplot2::facet_wrap(~predictor_var, ncol = ncol, scales=scale, labeller =labeller(.default =ggplot2::label_parsed))
+    
+  }
+  
+  if(isTRUE(zero_line)) {
+    p1 <- p1 + geom_hline(yintercept = 0, col='blue')
+  }
+  
+  if(isTRUE(logx)) {
+    p1 <- p1 + ggplot2::scale_x_log10()
+  }
+  
+  if(isTRUE(show_correlation)) {
+    p1 <- p1 + ggplot2::geom_text(data=cor_lab, aes(x = Inf, y = Inf, label=paste("r[s]==~", cor_lab$cor)),parse=TRUE, hjust=1, vjust=1.5)
+  }
+  
+  if(!is.null(ylimits)) {
+    p1 <- p1 + scale_y_continuous(limits = ylimits)
+  }
+  p1
+}
