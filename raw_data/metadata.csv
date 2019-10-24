@@ -66,24 +66,24 @@ Species,QI_61,Luzula acutifolia,snowpatch,%cover future,NA,2
 Calibration,CAL_9,Montia australasica,snowpatch,range,480,2
 Species,QI_39,Montia australasica,snowpatch,%cover now,NA,2
 Species,QI_59,Montia australasica,snowpatch,%cover future,NA,2
-Community,QI_103,NA NA,feldmark,%cover future,NA,2
-Community,QI_104,NA NA,snowpatch,%cover future,NA,2
-Community,QI_105,NA NA,grassland/herbfield,%cover future,NA,2
-Community,QI_106,NA NA,subalpine woodland,%cover future,NA,2
-Community,QI_107,NA NA,dry heathland,%cover future,NA,2
-Community,QI_108,NA NA,wetland complex,%cover future,NA,2
-Community,QI_109,NA NA,bog,%cover future,NA,2
-Community,QI_110,NA NA,fen,%cover future,NA,2
-Community,QI_111,NA NA,wet tussock grassland,%cover future,NA,2
-Community,QI_103init,NA NA,feldmark,%cover now,0.1,2
-Community,QI_104init,NA NA,snowpatch,%cover now,1,2
-Community,QI_105init,NA NA,grassland/herbfield,%cover now,25,2
-Community,QI_106init,NA NA,subalpine woodland,%cover now,24,2
-Community,QI_107init,NA NA,dry heathland,%cover now,35,2
-Community,QI_108init,NA NA,wetland complex,%cover now,15,2
-Community,QI_109init,NA NA,bog,%cover now,5,2
-Community,QI_110init,NA NA,fen,%cover now,4,2
-Community,QI_111init,NA NA,wet tussock grassland,%cover now,6,2
+Community,QI_103,NA,feldmark,%cover future,NA,2
+Community,QI_104,NA,snowpatch,%cover future,NA,2
+Community,QI_105,NA,grassland/herbfield,%cover future,NA,2
+Community,QI_106,NA,subalpine woodland,%cover future,NA,2
+Community,QI_107,NA,dry heathland,%cover future,NA,2
+Community,QI_108,NA,wetland complex,%cover future,NA,2
+Community,QI_109,NA,bog,%cover future,NA,2
+Community,QI_110,NA,fen,%cover future,NA,2
+Community,QI_111,NA,wet tussock grassland,%cover future,NA,2
+Community,QI_103,NA,feldmark,%cover now,0.1,2
+Community,QI_104,NA,snowpatch,%cover now,1,2
+Community,QI_105,NA,grassland/herbfield,%cover now,25,2
+Community,QI_106,NA,subalpine woodland,%cover now,24,2
+Community,QI_107,NA,dry heathland,%cover now,35,2
+Community,QI_108,NA,wetland complex,%cover now,15,2
+Community,QI_109,NA,bog,%cover now,5,2
+Community,QI_110,NA,fen,%cover now,4,2
+Community,QI_111,NA,wet tussock grassland,%cover now,6,2
 Species,QI_119,Olearia brevipedunculata,heathland,%cover now,NA,1
 Species,QI_144,Olearia brevipedunculata,heathland,%cover future,NA,1
 Species,QI_45,Oreobolus distichus,wetland,%cover now,NA,2
