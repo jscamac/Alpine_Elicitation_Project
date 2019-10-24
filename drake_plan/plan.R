@@ -14,7 +14,7 @@ plan <- drake::drake_plan(
                type = "species",
                outfile = file_out("outputs/spp_covers.pdf"),
                width = 12,
-               height = 5),
+               height = 6),
   
   # Extract summary data by community
   plant_community_summary =

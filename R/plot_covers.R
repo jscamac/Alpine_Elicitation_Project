@@ -34,7 +34,8 @@ plot_covers <- function(data,
       ggplot2::facet_wrap(~Community, nrow=1, scales="free_y") +
       ggplot2::scale_color_manual("",values = colorblind_spp) +
       ggplot2::scale_x_log10(limits = c(min(data$l95ci_current), max(data$u95ci_current))) +
-      ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future)))
+      ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future))) +
+      geom_text_repel(aes(label=Name), colour = "grey60", size=2) 
   } else {
     out <- out + 
       ggplot2::scale_color_manual("",values = colorblind_comm)
