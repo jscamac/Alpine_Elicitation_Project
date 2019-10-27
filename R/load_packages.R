@@ -29,17 +29,6 @@ for(p in packages) {
   }
 }
 
-# Install rnaturalearth data (if required)
-
-if("rnaturalearth" %in% installed_pkgs == FALSE) {
-  # Install rnaturalearth data
-  devtools::install_github("ropenscilabs/rnaturalearthdata")
-  # Install rnaturalearth hires
-  install.packages("rnaturalearthhires",
-                   repos = "http://packages.ropensci.org",
-                   type = "source")
-}
-
 # Load packages
 sapply(packages, require, character.only = TRUE)
 }

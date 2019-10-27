@@ -1,0 +1,21 @@
+#' Append plant species trait data to plant summary data
+#'
+#' Append plant species trait data to plant summary data
+#' @param data Dataframe derived from summary.
+#' @param trait_path Character. Path to plant species trait data
+#' @importFrom dplyr
+#' @export
+append_plant_traits <- function(data, trait_path) {
+  
+  traits <- read.csv(trait_path, stringsAsFactors = FALSE)
+  
+  data %>%
+    dplyr::select(Name, Community, mean_current, mean_future) %>%
+    dplyr::mutate(diff = mean_future - mean_current) %>%
+    dplyr::left_join(traits, by = "Name") %>%
+    dplyr::mutate(Extent = as.numeric(ifelse(Extent == "389,816.833 km2 ", "389816", Extent)),# Fix issue with extent
+                  Resprouter = dplyr::recode(Resprouter, "Y" = "Yes", "N" = "No"),
+                  Resprouter = ifelse(is.na(Resprouter), "Unknown", Resprouter), # Hack to get rid of NA
+                  Pollination = dplyr::recode(Pollination, "Not Wind" = "Other"),
+                  Dispersal_dist_m = exp(Log10_dispersal_dist_m))
+}

@@ -11,10 +11,10 @@ plan <- drake::drake_plan(
   
   plot_spp_covers =
     plot_covers(data = plant_spp_summary,
-               type = "species",
-               outfile = file_out("outputs/spp_covers.pdf"),
-               width = 12,
-               height = 6),
+                type = "species",
+                outfile = file_out("outputs/spp_covers.pdf"),
+                width = 12,
+                height = 6),
   
   # Extract summary data by community
   plant_community_summary =
@@ -23,15 +23,15 @@ plan <- drake::drake_plan(
   
   plot_comm_covers =
     plot_covers(data = plant_community_summary,
-               type = "community",
-               outfile = file_out("outputs/community_covers.pdf"),
-               width = 7,
-               height = 7),
+                type = "community",
+                outfile = file_out("outputs/community_covers.pdf"),
+                width = 7,
+                height = 7),
   
   # Count number of experts by direction for species level
   plant_spp_directions =
     direction_frequencies(data = compiled_plant_data,
-                        type = "species"),
+                          type = "species"),
   
   plot_spp_directions =
     plot_stack(data = plant_spp_directions,
@@ -50,13 +50,95 @@ plan <- drake::drake_plan(
                type = "community",
                outfile = file_out("outputs/community_directions.pdf"),
                width = 7,
-               height = 7)
+               height = 7),
+  
+  plant_regression_data =
+    append_plant_traits(data = plant_spp_summary,
+                        trait_path = file_in("raw_data/species_traits.csv")),
+  
+  plant_spp_trait_plots =
+    plot_scatter(data = plant_regression_data,
+                 response = "diff",
+                 predictor = c("Mean_ht_mm",
+                               "Leaf_area_mm2",
+                               "SLA_mm2mg1",
+                               "Diaspore_mg",
+                               "Dispersal_dist_m"),
+                 predictor_labels = c("Mean~ht~(mm)",
+                                      "Leaf~area~(mm^2)",
+                                      "SLA~(mm^{2}*mg^{-1})",
+                                      "Diaspore~(mg)",
+                                      "Dispersal~dist~(m)"),
+                 xlab ="Log10(traits values)",
+                 ylab ="Future - Current",
+                 alpha = 0.6,
+                 ncol=2,
+                 zero_line=TRUE,
+                 scale= "free",
+                 logx = TRUE,
+                 show_correlation = TRUE,
+                 outfile = file_out("outputs/plant_spp_traits.pdf"),
+                 width = 7,
+                 height = 7),
+  
+  plant_cat_traits_plots =
+    plot_scatter(data = plant_regression_data,
+                 response = "diff",
+                 predictor = c("Growth_form",
+                               "Resprouter",
+                               "Pollination",
+                               "Dispersal_mode"),
+                 predictor_labels = c("Growth~form",
+                                      "Resprouter",
+                                      "Pollinator",
+                                      "Dispersal~mode"),
+                 xlab ="Categorical traits",
+                 ylab = "Future - Current",
+                 alpha = 0.6,
+                 ncol=2,
+                 zero_line= TRUE,
+                 scale="free",
+                 logx = FALSE,
+                 outfile = file_out("outputs/plant_cat_traits.pdf"),
+                 width = 7,
+                 height = 7),
+  
+  plant_envion_trait_plots =
+    plot_scatter(data = plant_regression_data,
+                 response = "diff",
+                 predictor = c("altitude_min",
+                               "altitude_max",
+                               "altitude_range",
+                               "MAT_min",
+                               "MAT_max",
+                               "MAT_range",
+                               "Extent",
+                               "Area"),
+                 predictor_labels = c("Min~altitude~(m)",
+                                      "Max~altitude~(m)",
+                                      "Altitude~range~(m)",
+                                      "Min~MAT~(~degree*C)",
+                                      "Max~MAT~(~degree*C)",
+                                      "MAT~range~(~degree*C)",
+                                      "Extent~occupied~(km^2)",
+                                      "Area~occupied~(km^2)"),
+                 
+                 xlab ="Environmental traits",
+                 ylab ="Future - Current",
+                 alpha = 0.6,
+                 ncol=2,
+                 zero_line=TRUE,
+                 scale = "free",
+                 show_correlation = TRUE,
+                 logx = TRUE,
+                 outfile = file_out("outputs/plant_enviro_traits.pdf"),
+                 width = 7,
+                 height = 7)
 )
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
