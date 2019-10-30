@@ -83,8 +83,8 @@ plot_scatter <- function(data,
       predictor_labels <- predictor
     }
     
-    data <- data[,c(response, predictor, "Name")] %>%
-      tidyr::gather(., key="predictor_var", value="predictor_value", -c(response, Name)) %>%
+    data <- data[,c(response, predictor, "Species")] %>%
+      tidyr::gather(., key="predictor_var", value="predictor_value", -c(response, Species)) %>%
       dplyr::mutate(predictor_var = factor(predictor_var, levels=predictor, labels= predictor_labels)) %>%
       dplyr::mutate(response = !!sym(response))
     

@@ -55,9 +55,9 @@ summarise_plant_data <- function(data, type = "species") {
   }
   
   data %>%
-    dplyr::select(Name, Community, Expert_ID, State, Q50th) %>%
+    dplyr::select(Species, Community, Expert_ID, State, Q50th) %>%
     tidyr::spread(State, Q50th) %>%
-    dplyr::group_by(Name, Community) %>%
+    dplyr::group_by(Species, Community) %>%
     dplyr::summarise(N = n(),
                      lmn_curr = mean(qlogis(Current/100)),
                      ll95ci_curr = lmn_curr - (1.96 * sd(qlogis(Current/100))/sqrt(N)),
@@ -71,6 +71,6 @@ summarise_plant_data <- function(data, type = "species") {
                      mean_future = plogis(lmn_fut)*100,
                      l95ci_future = plogis(ll95ci_fut)*100,
                      u95ci_future = plogis(lu95ci_fut)*100) %>%
-    dplyr::select(Name, Community, mean_current, l95ci_current, u95ci_current,
+    dplyr::select(Species, Community, mean_current, l95ci_current, u95ci_current,
                   mean_future, l95ci_future, u95ci_future)
 }

@@ -4,6 +4,7 @@
 #' @param data Dataframe derived from \code{summarise_plant_data()}.
 #' @param type Character. Can be either species or community. Default = "species"
 #' This dictates whether one is interested in community level responses or spp level responses
+#' @param add_labels Logical. Add species labels to points
 #' @param outfile Character. Path to save plot. Default is NULL
 #' @param width width of plot. If not defined will use size of current graphic device
 #' @param height height of plot. If not defined will use size of current graphic device
@@ -12,6 +13,7 @@
 #' @export
 plot_covers <- function(data, 
                         type = "species", 
+                        add_labels = TRUE,
                         outfile = NULL, 
                         width = NA, 
                         height = NA,
@@ -34,8 +36,12 @@ plot_covers <- function(data,
       ggplot2::facet_wrap(~Community, nrow=1, scales="free_y") +
       ggplot2::scale_color_manual("",values = colorblind_spp) +
       ggplot2::scale_x_log10(limits = c(min(data$l95ci_current), max(data$u95ci_current))) +
-      ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future))) +
-      geom_text_repel(aes(label=Name), colour = "grey60", size=2) 
+      ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future)))
+    
+    if(isTRUE(add_labels)) {
+      out <- out + geom_text_repel(aes(label=Species), colour = "grey60", size=2) 
+    }
+    
   } else {
     out <- out + 
       ggplot2::scale_color_manual("",values = colorblind_comm)

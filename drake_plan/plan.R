@@ -1,8 +1,8 @@
 plan <- drake::drake_plan(  
   # Compile expert database
   compiled_plant_data = 
-    compile_plant_data(answers_path = drake::file_in("raw_data/expert_answers.csv"),
-                       metadata_path = drake::file_in("raw_data/metadata.csv")),
+    compile_plant_data(answers_path = drake::file_in("raw_data/plant_data/expert_answers.csv"),
+                       metadata_path = drake::file_in("raw_data/plant_data/metadata.csv")),
   
   # Extract summary data by species x community
   plant_spp_summary =
@@ -12,7 +12,7 @@ plan <- drake::drake_plan(
   plot_spp_covers =
     plot_covers(data = plant_spp_summary,
                 type = "species",
-                outfile = file_out("outputs/spp_covers.pdf"),
+                outfile = file_out("outputs/plant_spp_covers.pdf"),
                 width = 12,
                 height = 6),
   
@@ -24,37 +24,37 @@ plan <- drake::drake_plan(
   plot_comm_covers =
     plot_covers(data = plant_community_summary,
                 type = "community",
-                outfile = file_out("outputs/community_covers.pdf"),
+                outfile = file_out("outputs/plant_community_covers.pdf"),
                 width = 7,
                 height = 7),
   
   # Count number of experts by direction for species level
   plant_spp_directions =
-    direction_frequencies(data = compiled_plant_data,
-                          type = "species"),
+    plant_direction_frequencies(data = compiled_plant_data,
+                                type = "species"),
   
   plot_spp_directions =
-    plot_stack(data = plant_spp_directions,
-               type = "species",
-               outfile = file_out("outputs/spp_directions.pdf"),
-               width = 12,
-               height = 7),
+    plot_plant_directions(data = plant_spp_directions,
+                          type = "species",
+                          outfile = file_out("outputs/plant_spp_directions.pdf"),
+                          width = 12,
+                          height = 7),
   
   # Count number of experts by direction for community level
   plant_community_directions =
-    direction_frequencies(data = compiled_plant_data,
-                          type = "community"),
+    plant_direction_frequencies(data = compiled_plant_data,
+                                type = "community"),
   
   plot_comm_directions =
-    plot_stack(data = plant_community_directions,
-               type = "community",
-               outfile = file_out("outputs/community_directions.pdf"),
-               width = 7,
-               height = 7),
+    plot_plant_directions(data = plant_community_directions,
+                          type = "community",
+                          outfile = file_out("outputs/plant_community_directions.pdf"),
+                          width = 7,
+                          height = 7),
   
   plant_regression_data =
     append_plant_traits(data = plant_spp_summary,
-                        trait_path = file_in("raw_data/species_traits.csv")),
+                        trait_path = file_in("raw_data/plant_data/species_traits.csv")),
   
   plant_spp_trait_plots =
     plot_scatter(data = plant_regression_data,
@@ -133,7 +133,84 @@ plan <- drake::drake_plan(
                  logx = TRUE,
                  outfile = file_out("outputs/plant_enviro_traits.pdf"),
                  width = 7,
-                 height = 7)
+                 height = 7),
+  
+  animal_data = 
+    compile_animal_data(expert_file = file_in("raw_data/animal_data/animal_expert_answers.csv"), 
+                        q_file = file_in("raw_data/animal_data/animal_question_meta.csv"), 
+                        trait_file = file_in("raw_data/animal_data/animal_trait_data.csv")),
+  
+  animal_spp_summary_abundance = 
+    summarise_animal_data(data = animal_data, 
+                          Q_IDs = c("3A", "3B"),
+                          mass_convert = FALSE),
+  
+  plot_animal_abun_summary_taxon =
+    plot_animals(data = animal_spp_summary_abundance,
+                 add_labels = TRUE,
+                 colour_by = "Taxon",
+                 outfile = file_out("outputs/animal_abun_taxon.pdf"),
+                 ylabel = expression(paste("Future mass (100",~m^2, ")")),
+                 xlabel = expression(paste("Current mass (100",~m^2, ")")),
+                 width = 7, 
+                 height = 7),
+  
+  plot_animal_abun_summary_water =
+    plot_animals(data = animal_spp_summary_abundance,
+                 add_labels = TRUE,
+                 colour_by = "Water_centric",
+                 outfile = file_out("outputs/animal_abun_water.pdf"),
+                 ylabel = expression(paste("Future abundance (100",~m^2, ")")),
+                 xlabel = expression(paste("Current abundance (100",~m^2, ")")),
+                 width = 7, 
+                 height = 7),
+  
+  animal_spp_summary_mass = 
+    summarise_animal_data(data = animal_data, 
+                          Q_IDs = c("3A", "3B"),
+                          mass_convert = TRUE),
+  
+  plot_animal_mass_summary_taxon =
+    plot_animals(data = animal_spp_summary_mass,
+                 add_labels = TRUE,
+                 colour_by = "Taxon",
+                 outfile = file_out("outputs/animal_mass_taxon.pdf"),
+                 ylabel = expression(paste("Future mass (g/100",~m^2, ")")),
+                 xlabel = expression(paste("Current mass (g/100",~m^2, ")")),
+                 width = 7, 
+                 height = 7),
+  
+  plot_animal_mass_summary_water =
+    plot_animals(data = animal_spp_summary_mass,
+                 add_labels = TRUE,
+                 colour_by = "Water_centric",
+                 outfile = file_out("outputs/animal_mass_water.pdf"),
+                 ylabel = expression(paste("Future mass (g/100",~m^2, ")")),
+                 xlabel = expression(paste("Current mass (g/100",~m^2, ")")),
+                 width = 7, 
+                 height = 7),
+  
+  animal_spp_directions =
+    animal_spp_direction_frequencies(data = animal_data,
+                                     Q_IDs = c("3A", "3B")),
+  
+  plot_animal_direction_water =
+    plot_animal_directions(data = animal_spp_directions, 
+                           facet_by = "Water_centric",
+                           outfile = file_out("outputs/animal_water_directions.pdf"),
+                           width = 7,
+                           height = 7),
+  
+  plot_animal_direction_taxon =
+    plot_animal_directions(data = animal_spp_directions, 
+                           facet_by = "Taxon",
+                           outfile = file_out("outputs/animal_taxon_directions.pdf"),
+                           width = 7,
+                           height = 7),
+  
+  
+  
+  
 )
 
 

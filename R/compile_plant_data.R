@@ -16,5 +16,6 @@ compile_plant_data <- function(answers_path, metadata_path) {
   dplyr::left_join(metadata,expert_answers, by="Q_ID") %>%
     dplyr::mutate(State = factor(ifelse(State == "%cover now", "Current", 
                                         ifelse(State == "%cover in the past", "Current", "Future"))),
-                  Q50th = ifelse(!is.na(Answer),Answer, Q50th)) # Hack to fix the community data current estimates
+                  Q50th = ifelse(!is.na(Answer),Answer, Q50th)) %>% # Hack to fix the community data current estimates
+    dplyr::rename(Species = Name)
 }

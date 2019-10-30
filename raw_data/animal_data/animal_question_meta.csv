@@ -1,0 +1,7 @@
+﻿Q_ID,Q_TYPE,Description
+1A,Current,What is the low-elevation range limit (in metres above sea level) of this species?
+1B,Future,"In 25 years, climate conditions are projected to change as outlined in the table below. Given this scenario, what will the low-elevation range limit (in metres above sea level) of this species be in 25 years?"
+2A,Current,What is the high-elevation range limit (in metres above sea level) of this species?
+2B,Future,"In 25 years, climate conditions are projected to change as outlined in the table below. Given this scenario, what will the high-elevation range limit (in metres above sea level) of this species be in 25 years?"
+3A,Current,"When this species is present, how many individuals are there, on average, at their estimated peak abundance in the habitat type and area specified?"
+3B,Future,"In 25 years, climate conditions are projected to change as outlined in the table below. Given this scenario, in 25 years’ time, how many individuals will there be in the same location as you envisaged for Q3A, on average, at their estimated peak abundance?"

@@ -1,8 +1,8 @@
-#' Plot expert based judgements of directional change
+#' Plot expert based judgements of directional change for animals
 #'
-#' Plot expert based judgements of directional change
-#' @param data Dataframe derived from \code{direction_frequencies()}.
-#' @param type Character. Can be either species or community. Default = "species"
+#' Plot expert based judgements of directional change for animals
+#' @param data Dataframe derived from \code{animal_direction_frequencies()}.
+#' @param facet_by Character. Column name in which to produce facet sub plots. Default = NULL no facetting
 #' This dictates whether one is interested in community level responses or spp level responses
 #' @param outfile Character. Path to save plot. Default is NULL
 #' @param width width of plot. If not defined will use size of current graphic device
@@ -11,28 +11,27 @@
 #' @details This function uses the best estimate of experts to determine the frequency of directional change
 #' @importFrom dplyr ggplot2
 #' @export
-plot_stack <- function(data, 
-                       type = "species", 
-                       outfile = NULL, 
-                       width = NA, 
-                       height = NA,
-                       units = c("in", "cm", "mm")) {
+plot_animal_directions <- function(data,
+                                  facet_by = NULL,
+                                  outfile = NULL, 
+                                  width = NA, 
+                                  height = NA,
+                                  units = c("in", "cm", "mm")) {
   
-  if(type == "species") {
-    data <- data %>% 
-      dplyr::mutate(lab=ifelse(Direction=='negative_change', Name, NA))
-    
-    p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Name, negative_rank), y=Responses, label = Name)) +
-      ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-      ggplot2::geom_text(ggplot2::aes(label=lab, y=0), position='identity', hjust=-0.05, vjust=-1.8, size=3, 
-                         fontface='italic') +
-      ggplot2::facet_wrap(~Community, ncol = 5, scale="free", shrink = FALSE)
-  } else {
-    data <- data %>% 
-      dplyr::mutate(lab=ifelse(Direction=='negative_change', as.character(Community), NA))
-    p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Community, negative_rank), y=Responses, label = Community)) +
-      ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-      ggplot2::geom_text(ggplot2::aes(label=lab, y=0), position='identity', size=3,  hjust=-0.05, vjust=-3)
+  data <- data %>% 
+    dplyr::mutate(lab=ifelse(Direction=="negative_change", Species, NA))
+  
+  p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species, negative_rank), y=Responses, label = Species)) +
+    ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
+    ggplot2::geom_text(ggplot2::aes(label=lab, y=0), position='identity', hjust=-0.05, vjust=-2.5, size=3, 
+                       fontface='italic')
+  if(!is.null(facet_by)) {
+    if(facet_by == "Water_centric") {
+      ncols <- 2 } else {
+        ncols <- 3
+      }
+    p1 <- p1 +
+      ggplot2::facet_wrap(facet_by, ncol = ncols, scale="free", shrink = FALSE)
   }
   
   out <- p1 + 
