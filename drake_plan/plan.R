@@ -58,7 +58,7 @@ plan <- drake::drake_plan(
   
   plant_spp_trait_plots =
     plot_scatter(data = plant_regression_data,
-                 response = "diff",
+                 response = "mean_AC",
                  predictor = c("Mean_ht_mm",
                                "Leaf_area_mm2",
                                "SLA_mm2mg1",
@@ -70,7 +70,7 @@ plan <- drake::drake_plan(
                                       "Diaspore~(mg)",
                                       "Dispersal~dist~(m)"),
                  xlab ="Log10(traits values)",
-                 ylab ="Future - Current",
+                 ylab ="(Future - Current)/(Future + Current)",
                  alpha = 0.6,
                  ncol=2,
                  zero_line=TRUE,
@@ -83,7 +83,7 @@ plan <- drake::drake_plan(
   
   plant_cat_traits_plots =
     plot_scatter(data = plant_regression_data,
-                 response = "diff",
+                 response = "mean_AC",
                  predictor = c("Growth_form",
                                "Resprouter",
                                "Pollination",
@@ -93,7 +93,7 @@ plan <- drake::drake_plan(
                                       "Pollinator",
                                       "Dispersal~mode"),
                  xlab ="Categorical traits",
-                 ylab = "Future - Current",
+                 ylab = "(Future - Current)/(Future + Current)",
                  alpha = 0.6,
                  ncol=2,
                  zero_line= TRUE,
@@ -105,7 +105,7 @@ plan <- drake::drake_plan(
   
   plant_envion_trait_plots =
     plot_scatter(data = plant_regression_data,
-                 response = "diff",
+                 response = "mean_AC",
                  predictor = c("altitude_min",
                                "altitude_max",
                                "altitude_range",
@@ -124,7 +124,7 @@ plan <- drake::drake_plan(
                                       "Area~occupied~(km^2)"),
                  
                  xlab ="Environmental traits",
-                 ylab ="Future - Current",
+                 ylab ="(Future - Current)/(Future + Current)",
                  alpha = 0.6,
                  ncol=2,
                  zero_line=TRUE,
@@ -206,11 +206,7 @@ plan <- drake::drake_plan(
                            facet_by = "Taxon",
                            outfile = file_out("outputs/animal_taxon_directions.pdf"),
                            width = 7,
-                           height = 7),
-  
-  
-  
-  
+                           height = 7)
 )
 
 

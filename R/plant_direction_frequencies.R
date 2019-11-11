@@ -55,7 +55,7 @@ plant_direction_frequencies <- function(data, type = "species") {
   }
   
   data %>%
-    select(Species, State, Expert_ID, Community, Q50th) %>%
+    select(Species, Name, State, Expert_ID, Community, Q50th) %>%
     tidyr::spread(State,Q50th) %>%
     dplyr::mutate(Change = Future - Current,
                   no_change = ifelse(Change ==0,1,0),

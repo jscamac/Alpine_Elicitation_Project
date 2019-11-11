@@ -22,7 +22,7 @@ plot_animals <- function(data,
                          height = NA,
                          units = c("in", "cm", "mm")) {
   
-  colorblind_pallette <- c("#D55E00", "#0072B2", "#CC79A7","#E69F00", "#000000","#009E73")
+  colorblind_pallette <- c("#D55E00", "#0072B2", "#CC79A7","#E69F00", "#000000","#009E73", "#56B4E9")
   
   out <- ggplot2::ggplot(data= data, ggplot2::aes(x = mean_current, y = mean_future, colour = !!sym(colour_by))) +
     ggplot2::geom_point() + 
@@ -39,7 +39,7 @@ plot_animals <- function(data,
 
     
     if(isTRUE(add_labels)) {
-      out <- out + geom_text_repel(aes(label=Species), colour = "grey60", size=2) 
+      out <- out + geom_text_repel(aes(label=Species), box.padding=0.7, colour = "grey60", size=2) 
     }
   
   # outfile supplied

@@ -39,7 +39,7 @@ plot_covers <- function(data,
       ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future)))
     
     if(isTRUE(add_labels)) {
-      out <- out + geom_text_repel(aes(label=Species), colour = "grey60", size=2) 
+      out <- out + geom_text_repel(aes(label=Species),box.padding=1.2, colour = "grey60", size=2) 
     }
     
   } else {

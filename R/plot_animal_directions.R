@@ -23,7 +23,7 @@ plot_animal_directions <- function(data,
   
   p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species, negative_rank), y=Responses, label = Species)) +
     ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-    ggplot2::geom_text(ggplot2::aes(label=lab, y=0), position='identity', hjust=-0.05, vjust=-2.5, size=3, 
+    ggplot2::geom_text(ggplot2::aes(label=lab, y=0), position='identity', hjust=-0.05, vjust=0, size=2, 
                        fontface='italic')
   if(!is.null(facet_by)) {
     if(facet_by == "Water_centric") {
@@ -31,7 +31,7 @@ plot_animal_directions <- function(data,
         ncols <- 3
       }
     p1 <- p1 +
-      ggplot2::facet_wrap(facet_by, ncol = ncols, scale="free", shrink = FALSE)
+      ggplot2::facet_wrap(facet_by, ncol = ncols, scale="free", shrink = TRUE)
   }
   
   out <- p1 + 
