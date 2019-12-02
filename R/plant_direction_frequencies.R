@@ -71,6 +71,7 @@ plant_direction_frequencies <- function(data, type = "species") {
     dplyr::mutate(Direction = factor(Direction, 
                                      levels = c("positive_change",
                                                 "no_change",
-                                                "negative_change"))) %>%
+                                                "negative_change")),
+                  Responses_prop = Responses/N) %>%
     ungroup()
 }

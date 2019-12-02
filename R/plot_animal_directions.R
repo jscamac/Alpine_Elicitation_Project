@@ -19,11 +19,13 @@ plot_animal_directions <- function(data,
                                   units = c("in", "cm", "mm")) {
   
   data <- data %>% 
-    dplyr::mutate(lab=ifelse(Direction=="negative_change", Species, NA))
+    dplyr::mutate(lab = paste0(Species, " (", N,")"),
+                  lab = ifelse(Direction=="negative_change", lab, NA),
+                  )
   
-  p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species, negative_rank), y=Responses, label = Species)) +
+  p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species, negative_rank), y=Responses_prop, label = lab)) +
     ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-    ggplot2::geom_text(ggplot2::aes(label=lab, y=0), position='identity', hjust=-0.05, vjust=0, size=2, 
+    ggplot2::geom_text(ggplot2::aes(y=0), position='identity',  vjust = 0.5, hjust = -0.05, size=2, 
                        fontface='italic')
   if(!is.null(facet_by)) {
     if(facet_by == "Water_centric") {
@@ -37,17 +39,19 @@ plot_animal_directions <- function(data,
   out <- p1 + 
     ggplot2::scale_fill_manual(values = c(negative_change = "#d95f02", no_change = "#1b9e77", positive_change = "#7570b3"),
                                labels=c("Positive change", "No change", "Negative change")) +
-    ggplot2::theme(axis.text.x=ggplot2::element_text(size = 6, angle=45,hjust=1)) + 
-    ggplot2::theme(legend.position = c(0.7,0.15)) + 
-    ggplot2::scale_y_continuous(expand=c(0,0)) +
+    ggplot2::scale_y_continuous(expand=c(0,0), breaks = c(0, .25, .5, .75, 1),
+                                labels=c("0", ".25", ".5", ".75", "1")) +
     ggplot2::coord_flip() +
-    ggplot2::ylab("Number of responses") +
+    ggplot2::ylab("Proportion of responses") +
     ggplot2::xlab(NULL) +
-    ggplot2::theme_classic() +
-    ggplot2::theme(panel.spacing.x = ggplot2::unit(1, "cm"),
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.grid = element_blank(),
+                   panel.spacing.x = ggplot2::unit(0.25, "cm"),
                    axis.text.y = ggplot2::element_blank(),
                    axis.line.y = ggplot2::element_blank(),
-                   axis.ticks.length.y = ggplot2::unit(0, "cm"))
+                   axis.ticks.length.y = ggplot2::unit(0, "cm"),
+                   legend.position = "bottom",
+                   plot.margin = unit(rep(0.5,4), "cm"))
   
   # outfile supplied
   if(!is.null(outfile)) {

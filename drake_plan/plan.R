@@ -37,8 +37,8 @@ plan <- drake::drake_plan(
     plot_plant_directions(data = plant_spp_directions,
                           type = "species",
                           outfile = file_out("outputs/plant_spp_directions.pdf"),
-                          width = 12,
-                          height = 7),
+                          width = 8,
+                          height = 5),
   
   # Count number of experts by direction for community level
   plant_community_directions =
@@ -49,8 +49,8 @@ plan <- drake::drake_plan(
     plot_plant_directions(data = plant_community_directions,
                           type = "community",
                           outfile = file_out("outputs/plant_community_directions.pdf"),
-                          width = 7,
-                          height = 7),
+                          width = 6,
+                          height = 6),
   
   plant_regression_data =
     append_plant_traits(data = plant_spp_summary,
@@ -140,71 +140,100 @@ plan <- drake::drake_plan(
                         q_file = file_in("raw_data/animal_data/animal_question_meta.csv"), 
                         trait_file = file_in("raw_data/animal_data/animal_trait_data.csv")),
   
+  animal_spp_summary_LowElev = 
+    summarise_animal_data(data = animal_data, 
+                          Q_IDs = c("1A", "1B"),
+                          mass_convert = FALSE),
+  
+  animal_scatter_plots_LowElev =
+    plot_animals(data = animal_spp_summary_LowElev,
+                 add_labels = TRUE,
+                 log_scale = FALSE,
+                 facet_by = "Water_centric",
+                 ylabel = "Future minimum elevation (m)",
+                 xlabel = "Current minimum elevation (m)",
+                 outfile = drake::file_out("outputs/animal_scatter_LowElev.pdf"),
+                 width = 6,
+                 height = 4),
+                                      
+  animal_spp_directions_LowElev =
+    animal_spp_direction_frequencies(data = animal_data,
+                                     Q_IDs = c("1A", "1B")),
+  
+  plot_animal_direction_water_LowElev =
+    plot_animal_directions(data = animal_spp_directions_LowElev, 
+                           facet_by = "Water_centric",
+                           outfile = file_out("outputs/animal_water_LowElev.pdf"),
+                           width = 7,
+                           height = 7),
+  
+  animal_spp_summary_HighElev = 
+    summarise_animal_data(data = animal_data, 
+                          Q_IDs = c("2A", "2B"),
+                          mass_convert = FALSE),
+  
+  animal_scatter_plots_HighElev =
+    plot_animals(data = animal_spp_summary_HighElev,
+                 add_labels = TRUE,
+                 facet_by = "Water_centric",
+                 log_scale = FALSE,
+                 ylabel = "Future maximum elevation (m)",
+                 xlabel = "Current maximum elevation (m)",
+                 outfile = drake::file_out("outputs/animal_scatter_HighElev.pdf"),
+                 width = 6,
+                 height = 6),
+  
+  animal_spp_directions_HighElev =
+    animal_spp_direction_frequencies(data = animal_data,
+                                     Q_IDs = c("2A", "2B")),
+  
+  plot_animal_direction_water_HighElev =
+    plot_animal_directions(data = animal_spp_directions_HighElev, 
+                           facet_by = "Water_centric",
+                           outfile = file_out("outputs/animal_water_directions_HighElev.pdf"),
+                           width = 7,
+                           height = 4),  
+  
   animal_spp_summary_abundance = 
     summarise_animal_data(data = animal_data, 
                           Q_IDs = c("3A", "3B"),
-                          mass_convert = FALSE),
+                          mass_convert = FALSE) %>% 
+    dplyr::filter(SPP_ID != 2), # Remove Bogong Moth for now
   
-  plot_animal_abun_summary_taxon =
-    plot_animals(data = animal_spp_summary_abundance,
-                 add_labels = TRUE,
-                 colour_by = "Taxon",
-                 outfile = file_out("outputs/animal_abun_taxon.pdf"),
-                 ylabel = expression(paste("Future mass (100",~m^2, ")")),
-                 xlabel = expression(paste("Current mass (100",~m^2, ")")),
-                 width = 7, 
-                 height = 7),
-  
-  plot_animal_abun_summary_water =
-    plot_animals(data = animal_spp_summary_abundance,
-                 add_labels = TRUE,
-                 colour_by = "Water_centric",
-                 outfile = file_out("outputs/animal_abun_water.pdf"),
-                 ylabel = expression(paste("Future abundance (100",~m^2, ")")),
-                 xlabel = expression(paste("Current abundance (100",~m^2, ")")),
-                 width = 7, 
-                 height = 7),
   
   animal_spp_summary_mass = 
     summarise_animal_data(data = animal_data, 
                           Q_IDs = c("3A", "3B"),
-                          mass_convert = TRUE),
+                          mass_convert = TRUE)  %>% # Remove Bogong Moth for now,
+    dplyr::filter(SPP_ID != 2),
   
-  plot_animal_mass_summary_taxon =
-    plot_animals(data = animal_spp_summary_mass,
-                 add_labels = TRUE,
-                 colour_by = "Taxon",
-                 outfile = file_out("outputs/animal_mass_taxon.pdf"),
-                 ylabel = expression(paste("Future mass (g/100",~m^2, ")")),
-                 xlabel = expression(paste("Current mass (g/100",~m^2, ")")),
-                 width = 7, 
-                 height = 7),
+  animal_scatter_plots_3 =
+    ggplot2::ggsave(cowplot::plot_grid(plot_animals(data = animal_spp_summary_abundance %>% filter(SPP_ID !=2),
+                                    add_labels = TRUE,
+                                    log_scale = TRUE,
+                                    facet_by = "Water_centric",
+                                    ylabel = expression(paste("Future abundance (100",~m^2, ")")),
+                                    xlabel = expression(paste("Current abundance (100",~m^2, ")"))),
+                       
+                       plot_animals(data = animal_spp_summary_mass %>% filter(SPP_ID !=2),
+                                    add_labels = TRUE,
+                                    log_scale = TRUE,
+                                    facet_by = "Water_centric",
+                                    ylabel = expression(paste("Future mass (g/100",~m^2, ")")),
+                                    xlabel = expression(paste("Current mass (g/100",~m^2, ")"))), 
+                       nrow = 2, labels =LETTERS),
+                    filename = file_out("outputs/animal_scatter3AB.pdf"),
+                    width = 7,
+                    height = 7),
   
-  plot_animal_mass_summary_water =
-    plot_animals(data = animal_spp_summary_mass,
-                 add_labels = TRUE,
-                 colour_by = "Water_centric",
-                 outfile = file_out("outputs/animal_mass_water.pdf"),
-                 ylabel = expression(paste("Future mass (g/100",~m^2, ")")),
-                 xlabel = expression(paste("Current mass (g/100",~m^2, ")")),
-                 width = 7, 
-                 height = 7),
-  
-  animal_spp_directions =
+  animal_spp_directions3 =
     animal_spp_direction_frequencies(data = animal_data,
                                      Q_IDs = c("3A", "3B")),
   
-  plot_animal_direction_water =
-    plot_animal_directions(data = animal_spp_directions, 
+  plot_animal_direction_water3 =
+    plot_animal_directions(data = animal_spp_directions3, 
                            facet_by = "Water_centric",
-                           outfile = file_out("outputs/animal_water_directions.pdf"),
-                           width = 7,
-                           height = 7),
-  
-  plot_animal_direction_taxon =
-    plot_animal_directions(data = animal_spp_directions, 
-                           facet_by = "Taxon",
-                           outfile = file_out("outputs/animal_taxon_directions.pdf"),
+                           outfile = file_out("outputs/animal_water_directions3AB.pdf"),
                            width = 7,
                            height = 7)
 )

@@ -27,7 +27,7 @@ summarise_animal_data <- function(data, Q_IDs, mass_convert = FALSE) {
   dat %>%
     tidyr::spread(Q_TYPE, Q50th) %>%
     na.omit() %>% # Removes experts that provided no answer for particular questions
-    dplyr::group_by(Species, Water_centric, Taxon, Mass_g) %>%
+    dplyr::group_by(Species, SPP_ID, Water_centric, Taxon, Mass_g) %>%
     dplyr::summarise(N = n(),
                      lmn_curr = mean(log(Current)),
                      ll95ci_curr = lmn_curr - (1.96 * sd(log(Current))/sqrt(N)),
@@ -41,6 +41,6 @@ summarise_animal_data <- function(data, Q_IDs, mass_convert = FALSE) {
                      mean_future = exp(lmn_fut),
                      l95ci_future = exp(ll95ci_fut),
                      u95ci_future = exp(lu95ci_fut)) %>%
-    dplyr::select(Species, Water_centric, Taxon, Mass_g, N, mean_current, l95ci_current, u95ci_current,
+    dplyr::select(Species, SPP_ID, Water_centric, Taxon, Mass_g, N, mean_current, l95ci_current, u95ci_current,
                   mean_future, l95ci_future, u95ci_future)
 }

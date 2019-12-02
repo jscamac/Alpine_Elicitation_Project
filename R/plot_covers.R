@@ -22,29 +22,27 @@ plot_covers <- function(data,
   colorblind_spp <- c("#009E73","#E69F00","#CC79A7","#0072B2","#D55E00")
   colorblind_comm <- c("#009E73", "#E69F00", "#CC79A7", "#F0E442","#56B4E9", "#000000", "#0072B2","#D55E00","#999999")
   
-  out <- ggplot2::ggplot(data= data, ggplot2::aes(x = mean_current, y = mean_future, colour = Community)) +
+  out <- ggplot2::ggplot(data= data, ggplot2::aes(x = mean_current, y = mean_future)) +
     ggplot2::geom_point() + 
-    ggplot2::geom_abline(intercept = 0, slope =1, linetype = 2) + 
+    ggplot2::geom_abline(intercept = 0, slope =1, linetype = 2, alpha = 0.5) + 
     ggplot2::geom_errorbar(ggplot2::aes(ymin = l95ci_future, ymax=u95ci_future)) +
-    ggplot2::theme_classic() +
-    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.grid = element_blank()) +
     ylab("Future Cover (%)") +
     xlab("Current Cover (%)")
   
   if(type == "species") {
     out <-  out + ggplot2::geom_errorbarh(ggplot2::aes(xmin = l95ci_current, xmax=u95ci_current)) +
       ggplot2::facet_wrap(~Community, nrow=1, scales="free_y") +
-      ggplot2::scale_color_manual("",values = colorblind_spp) +
       ggplot2::scale_x_log10(limits = c(min(data$l95ci_current), max(data$u95ci_current))) +
       ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future)))
     
     if(isTRUE(add_labels)) {
-      out <- out + geom_text_repel(aes(label=Species),box.padding=1.2, colour = "grey60", size=2) 
+      out <- out + geom_text_repel(aes(label=Species), box.padding=1, force=15, colour = "red", size=2, segment.alpha=0.4) 
     }
     
   } else {
-    out <- out + 
-      ggplot2::scale_color_manual("",values = colorblind_comm)
+    out <- out + geom_text_repel(aes(label=Community), box.padding=1, force=10, colour = "red", size=2, segment.alpha=0.4) 
   }
   
   # outfile supplied

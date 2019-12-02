@@ -31,5 +31,6 @@ animal_spp_direction_frequencies <- function(data, Q_IDs) {
     dplyr::mutate(Direction = factor(Direction, 
                                      levels = c("positive_change",
                                                 "no_change",
-                                                "negative_change")))
+                                                "negative_change")),
+                  Responses_prop = Responses/N)
 }
