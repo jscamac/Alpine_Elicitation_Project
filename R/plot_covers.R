@@ -23,26 +23,28 @@ plot_covers <- function(data,
   colorblind_comm <- c("#009E73", "#E69F00", "#CC79A7", "#F0E442","#56B4E9", "#000000", "#0072B2","#D55E00","#999999")
   
   out <- ggplot2::ggplot(data= data, ggplot2::aes(x = mean_current, y = mean_future)) +
-    ggplot2::geom_point() + 
+    ggplot2::geom_point(size = 0.5) + 
     ggplot2::geom_abline(intercept = 0, slope =1, linetype = 2, alpha = 0.5) + 
-    ggplot2::geom_errorbar(ggplot2::aes(ymin = l95ci_future, ymax=u95ci_future)) +
+    ggplot2::geom_linerange(ggplot2::aes(ymin = l95ci_future, ymax=u95ci_future), alpha = 0.7, size = 0.25) +
     ggplot2::theme_bw() +
     ggplot2::theme(panel.grid = element_blank()) +
     ylab("Future Cover (%)") +
     xlab("Current Cover (%)")
   
   if(type == "species") {
-    out <-  out + ggplot2::geom_errorbarh(ggplot2::aes(xmin = l95ci_current, xmax=u95ci_current)) +
+    out <-  out + ggplot2::geom_errorbarh(ggplot2::aes(xmin = l95ci_current, xmax=u95ci_current), alpha = 0.7, size = 0.25) +
       ggplot2::facet_wrap(~Community, nrow=1, scales="free_y") +
       ggplot2::scale_x_log10(limits = c(min(data$l95ci_current), max(data$u95ci_current))) +
       ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future)))
     
     if(isTRUE(add_labels)) {
-      out <- out + geom_text_repel(aes(label=Species), box.padding=1, force=15, colour = "red", size=2, segment.alpha=0.4) 
+      out <- out + geom_text_repel(aes(label=Species), box.padding=1, force=10, colour = "red", size=1.5, segment.alpha=0.4, 
+                                   segment.size = 0.3, fontface ="italic") 
     }
     
   } else {
-    out <- out + geom_text_repel(aes(label=Community), box.padding=1, force=10, colour = "red", size=2, segment.alpha=0.4) 
+    out <- out + geom_text_repel(aes(label=Community), box.padding=1, force=2, colour = "red", size=1.5, segment.alpha=0.4,
+                                 segment.size = 0.3) 
   }
   
   # outfile supplied

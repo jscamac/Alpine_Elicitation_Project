@@ -153,8 +153,8 @@ plan <- drake::drake_plan(
                  ylabel = "Future minimum elevation (m)",
                  xlabel = "Current minimum elevation (m)",
                  outfile = drake::file_out("outputs/animal_scatter_LowElev.pdf"),
-                 width = 6,
-                 height = 4),
+                 width = 7,
+                 height = 5),
                                       
   animal_spp_directions_LowElev =
     animal_spp_direction_frequencies(data = animal_data,
@@ -165,7 +165,7 @@ plan <- drake::drake_plan(
                            facet_by = "Water_centric",
                            outfile = file_out("outputs/animal_water_LowElev.pdf"),
                            width = 7,
-                           height = 7),
+                           height = 5),
   
   animal_spp_summary_HighElev = 
     summarise_animal_data(data = animal_data, 
@@ -180,8 +180,8 @@ plan <- drake::drake_plan(
                  ylabel = "Future maximum elevation (m)",
                  xlabel = "Current maximum elevation (m)",
                  outfile = drake::file_out("outputs/animal_scatter_HighElev.pdf"),
-                 width = 6,
-                 height = 6),
+                 width = 7,
+                 height = 5),
   
   animal_spp_directions_HighElev =
     animal_spp_direction_frequencies(data = animal_data,
@@ -192,7 +192,7 @@ plan <- drake::drake_plan(
                            facet_by = "Water_centric",
                            outfile = file_out("outputs/animal_water_directions_HighElev.pdf"),
                            width = 7,
-                           height = 4),  
+                           height = 5),  
   
   animal_spp_summary_abundance = 
     summarise_animal_data(data = animal_data, 
@@ -235,7 +235,7 @@ plan <- drake::drake_plan(
                            facet_by = "Water_centric",
                            outfile = file_out("outputs/animal_water_directions3AB.pdf"),
                            width = 7,
-                           height = 7)
+                           height = 5)
 )
 
 

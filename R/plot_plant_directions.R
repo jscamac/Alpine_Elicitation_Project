@@ -41,7 +41,7 @@ plot_plant_directions <- function(data,
   }
   
   out <- p1 + 
-    ggplot2::scale_fill_manual("",values = c(negative_change = "#d95f02", no_change = "#1b9e77", positive_change = "#7570b3"),
+    ggplot2::scale_fill_manual("",values = c(negative_change = "#E69F00", no_change = "#CC79A7", positive_change = "#0072B2"),
                                labels=c("Positive change", "No change", "Negative change")) +
     ggplot2::scale_y_continuous(expand=c(0,0), breaks = c(0, .25, .5, .75, 1),
                                 labels=c("0", ".25", ".5", ".75", "1")) +
