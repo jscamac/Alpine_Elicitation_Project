@@ -38,12 +38,12 @@ plot_covers <- function(data,
       ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future)))
     
     if(isTRUE(add_labels)) {
-      out <- out + geom_text_repel(aes(label=Species), box.padding=1, force=10, colour = "red", size=1.5, segment.alpha=0.4, 
+      out <- out + geom_text_repel(aes(label=Species), box.padding=1, force=10, colour = "red", size=2, segment.alpha=0.4, 
                                    segment.size = 0.3, fontface ="italic") 
     }
     
   } else {
-    out <- out + geom_text_repel(aes(label=Community), box.padding=1, force=2, colour = "red", size=1.5, segment.alpha=0.4,
+    out <- out + geom_text_repel(aes(label=Community), box.padding=1, force=2, colour = "red", size=2, segment.alpha=0.4,
                                  segment.size = 0.3) 
   }
   
