@@ -1,4 +1,4 @@
-Q_type,Q_ID,Name,Community,State,Answer,Grps_discussed
+Q_type,Q_ID,Species_name,Community,State,Answer,Grps_discussed
 Species,QI_136,Acaena novae-zelandiae,woodland,%cover now,NA,1
 Species,QI_161,Acaena novae-zelandiae,woodland,%cover future,NA,1
 Species,QI_32,Aciphylla glacialis,grassland,%cover now,NA,2
@@ -14,8 +14,8 @@ Species,QI_155,Astelia alpina,wetland,%cover future,NA,1
 Calibration,CAL_25,Baeckea gunniana,wetland,%cover in the past,9.9,2
 Species,QI_128,Baeckea gunniana,wetland,%cover now,NA,2
 Species,QI_153,Baeckea gunniana,wetland,%cover future,NA,2
-Species,QI_126,Caltha introloba,snowpatch,%cover now,NA,2
-Species,QI_151,Caltha introloba,snowpatch,%cover future,NA,2
+Species,QI_126,Psychrophila introloba,snowpatch,%cover now,NA,2
+Species,QI_151,Psychrophila introloba,snowpatch,%cover future,NA,2
 Species,QI_116,Carex breviculmis,grassland,%cover now,NA,2
 Species,QI_141,Carex breviculmis,grassland,%cover future,NA,2
 Species,QI_44,Carex gaudichaudina,wetland,%cover now,NA,2
@@ -59,8 +59,8 @@ Species,QI_74,Kunzea muelleri,heathland,%cover now,NA,0
 Species,QI_90,Kunzea muelleri,heathland,%cover future,NA,0
 Species,QI_114,Leptorhynchos squamatus,grassland,%cover now,NA,2
 Species,QI_139,Leptorhynchos squamatus,grassland,%cover future,NA,2
-Species,QI_75,Leucopogon montanus,heathland,%cover now,NA,2
-Species,QI_91,Leucopogon montanus,heathland,%cover future,NA,2
+Species,QI_75,Acrothamnus montanus,heathland,%cover now,NA,2
+Species,QI_91,Acrothamnus montanus,heathland,%cover future,NA,2
 Species,QI_41,Luzula acutifolia,snowpatch,%cover now,NA,2
 Species,QI_61,Luzula acutifolia,snowpatch,%cover future,NA,2
 Calibration,CAL_9,Montia australasica,snowpatch,range,480,2

@@ -83,8 +83,8 @@ plot_scatter <- function(data,
       predictor_labels <- predictor
     }
     
-    data <- data[,c(response, predictor, "Species")] %>%
-      tidyr::gather(., key="predictor_var", value="predictor_value", -c(response, Species)) %>%
+    data <- data[,c(response, predictor, "Species_name")] %>%
+      tidyr::gather(., key="predictor_var", value="predictor_value", -c(response, Species_name)) %>%
       dplyr::mutate(predictor_var = factor(predictor_var, levels=predictor, labels= predictor_labels)) %>%
       dplyr::mutate(response = !!sym(response))
     
@@ -109,7 +109,7 @@ plot_scatter <- function(data,
   }
   
   if(isTRUE(show_correlation)) {
-    out <- out + ggplot2::geom_text(data=cor_lab, aes(x = Inf, y = -Inf, label=paste("r[s]==~", cor_lab$cor)),parse=TRUE, vjust = -0.5, hjust = "inward")
+    out <- out + ggplot2::geom_text(data=cor_lab, aes(x = Inf, y = -Inf, label=paste("r[s]==~", cor)),parse=TRUE, vjust = -0.5, hjust = "inward")
   }
   
   if(!is.null(ylimits)) {

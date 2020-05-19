@@ -11,8 +11,7 @@ append_plant_traits <- function(data, trait_path) {
     dplyr::select(-Genus,-Species)
   
   data %>%
-    dplyr::select(Species, Name, Community, mean_current, mean_future, mean_AC) %>%
-    dplyr::left_join(traits, by = "Name") %>%
+    dplyr::left_join(traits, by = "Species_name") %>%
     dplyr::mutate(Extent = as.numeric(ifelse(Extent == "389,816.833 km2 ", "389816", Extent)),# Fix issue with extent
                   Resprouter = dplyr::recode(Resprouter, "Y" = "Yes", "N" = "No"),
                   Resprouter = ifelse(is.na(Resprouter), "Unknown", Resprouter), # Hack to get rid of NA

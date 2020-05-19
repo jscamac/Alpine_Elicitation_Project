@@ -1,36 +1,36 @@
-﻿Species,SPP_ID,Water_centric,Common_name,Taxon,Original,Discussed,Mass_g,Mass_ref
-Acripeza reticulata,1,0,Mountain katydid,insect,0,0,1.8,"Kate Umbers (based on 50 individuals, mean of male mean and female mean)"
-Agrotis infusa,2,0,Bogong moth,insect,1,1,0.225,Eric Warrant
-Anaspides tasmaniae,3,1,Mountain shrimp,crust,1,1,3,"Mass estimated using a = ??? and b = 3, mass(g) = a*length(mm)*b as described in Li et al 2018; Green, K & Osborne, W. 2012, Wildlife of the Australian Snow Country, New Holland Publishers, Frenchs Forest, Australia: 35mm"
-Archipetalia auriculata,4,1,Tasmanian red spot dragonfly,insect,1,0,0.4,Google dragonfly estimate https://pratt.duke.edu/about/news/tracking-dragonflies-wing; emailed Mike Driessen
-Austrelaps ramsayi,5,0,Highland copperhead,herp,1,1,559,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 1300mm SVL; estimate from equation = 557g; estimate from graphing in Excel = 315g"
-Austroaeschna flavomaculata ,6,1,Alpine darner,insect,1,0,0.4,Google dragonfly estimate https://pratt.duke.edu/about/news/tracking-dragonflies-wing; (Theischinger 1982: 40mm abdomen)
-Bryobatrachus nimbus,7,1,Moss froglet,herp,1,1,2.1,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 28.5mm length; 2.1g estimate from amphibian length-mass allometry paper using Myobatrachidae equation; Nicki Mitchell data, average mass of male = 1.3g (n = 37), largest female is 3.3g."
-Burramys parvus,8,0,Mountain pygmy possum ,mammal,1,1,40,Kortner & Geiser 1998
-Caenoplana coerulea,9,1,Blue planarian ,worm,0,0,0.1,Mass estimate is a guess; Ogren 1989: 60mm
-Coloburiscoides giganteus,10,1,Mayfly,insect,1,1,0.1,Mass estimate is a guess
-Dirce aesiodora,12,0,Pencil pine moth,insect,1,1,0.5,emailed Mike Driessen
-Drysdalia coronoides,14,0,White-lipped snake ,herp,0,0,31,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 400mm SVL; 31g from equation in paper; 52g from equation in Excel"
-Euastacus rieki,15,1,Alpine crayfish,crust,1,1,50,Mean weight of yabby: https://www.dpi.nsw.gov.au/fishing/aquaculture/publications/species-freshwater/freshwater-yabby
-Eulamprus kosciuskoi,16,0,Alpine water skink,herp,1,1,8.3,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 80mm SVL; mass from skink allometry paper "
-Galaxias supremus,17,1,Kosciuszko galaxias,fish,1,1,8,Raadik 2014 Zootaxa
-Kosciuscola tristis ,19,0,Thermocolour grasshopper ,insect,1,1,0.4,Rachel Slatyer
-Leioproctus obscurus,20,0,Leioproctus bee,insect,1,1,0.1,https://bigislandbees.com/blogs/bee-blog/14137349-interesting-bee-honey-facts
-Liopholis guthega,21,0,Guthega skink,herp,0,0,24,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 96mm SVL; 18g from equation in skink allometry paper; Email from Zak Atkins on measured masses: NSW pop mean 29.3g, Vic pop mean 18.5g, mean of the two is 23.9g"
-Mastacomys fuscus,22,0,Broad-toothed rat ,mammal,1,1,117.5,"Green, K & Osborne, W. 2012, Wildlife of the Australian Snow Country, New Holland Publishers, Frenchs Forest, Australia"
-Monistria concinna,23,0,Spotted mountain grasshopper ,insect,0,0,0.95,"Green, K. 1981, unpublished data"
-Niveoscincus greeni,24,0,Northern snow skink ,herp,0,0,4.6,Caldwell et al 2017; 62mm SVL
-Niveoscincus microlepidotus,25,0,Southern snow skink,herp,1,1,4.65,Caldwell et al 2017; 62mm SVL
-Notoscolex montiskosciuskoi,26,0,Kosciuszko earthworm,worm,1,0,2,"Wood 1974, Journal of Animal Ecology"
-Oncopera alpina,27,0,Swift moth,insect,1,1,0.5,Mass estimate is a guess
-Paragalaxius julianus,28,1,Western paragalaxias,fish,1,1,9,Nelson 2004: 100mm length; mass estimated from Jellyman et al 2013
-Percolestus blackburni,29,0,Carabid beetle,insect,1,0,0.1,Mass estimate is a guess
-Philoria frosti,30,1,Baw Baw frog ,herp,1,1,11,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 50.5mm length; mass estimate from Greg Hollis PhD thesis"
-Polyzosteria viridissima ,31,0,Kosciuszko metallic cockroach ,insect,1,1,2,Educated estimate
-Pseudemoia cryodroma,32,0,Alpine bog skink,herp,1,1,4.5,Maggie Haines
-Pseudophryne pengilleyi,33,1,Northern corroboree frog,herp,1,1,3,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 27mm length; Mass estimate from Silla & Byrne 2018"
-Rankinia diemensis,34,0,Mountain dragon,herp,1,1,10,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 75mm SVL; Mass from herp allometry paper"
-Tasmanalpina clavata,35,0,Tasmanian velvet grasshopper,insect,0,1,0.4,Emailed Mike Driessen; mass estimate at the moment is the same as tristis
-Thaumatoperla alpina ,36,1,Alpine stonefly,insect,1,1,0.89,Data from Julia Mynott
-Venatrix funesta,37,0,Wolf spider,spider,1,0,2,Mass estimate is a guess
-Pseudophryne corroboree,38,1,Southern corroboree frog,herp,1,1,3,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 30mm length; 3g estimate from Silla & Byrne northern corroboree frog"
+﻿Species,SPP_ID,Water_centric,Common_name,Taxon,Max_elev,Original,Discussed,Mass_g,Mass_ref
+Anaspides tasmaniae,3,1,Mountain shrimp,Crustacean,1617,1,1,3,"Mass estimated using a = ??? and b = 3, mass(g) = a*length(mm)*b as described in Li et al 2018; Green, K & Osborne, W. 2012, Wildlife of the Australian Snow Country, New Holland Publishers, Frenchs Forest, Australia: 35mm"
+Euastacus rieki,15,1,Alpine crayfish,Crustacean,2228,1,1,50,Mean weight of yabby: https://www.dpi.nsw.gov.au/fishing/aquaculture/publications/species-freshwater/freshwater-yabby
+Galaxias supremus,17,1,Kosciuszko galaxias,Fish,2228,1,1,8,Raadik 2014 Zootaxa
+Paragalaxius julianus,28,1,Western paragalaxias,Fish,1617,1,1,9,Nelson 2004: 100mm length; mass estimated from Jellyman et al 2013
+Caenoplana coerulea,9,1,Blue planarian ,Worm,2228,0,0,0.1,Mass estimate is a guess; Ogren 1989: 60mm
+Bryobatrachus nimbus,7,1,Moss froglet,Frog,1617,1,1,2.1,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 28.5mm length; 2.1g estimate from amphibian length-mass allometry paper using Myobatrachidae equation; Nicki Mitchell data, average mass of male = 1.3g (n = 37), largest female is 3.3g."
+Philoria frosti,30,1,Baw Baw frog ,Frog,2228,1,1,11,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 50.5mm length; mass estimate from Greg Hollis PhD thesis"
+Pseudophryne pengilleyi,33,1,Northern corroboree frog,Frog,2228,1,1,3,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 27mm length; Mass estimate from Silla & Byrne 2018"
+Pseudophryne corroboree,38,1,Southern corroboree frog,Frog,2228,1,1,3,"Anstis, M. 2013. Tadpoles and frogs of Australia, New Holland Publishers, Sydney, Australia: 30mm length; 3g estimate from Silla & Byrne northern corroboree frog"
+Acripeza reticulata,1,0,Mountain katydid,Insect,2228,0,0,1.8,"Kate Umbers (based on 50 individuals, mean of male mean and female mean)"
+Agrotis infusa,2,0,Bogong moth,Insect,2228,1,1,0.225,Eric Warrant
+Archipetalia auriculata,4,1,Tasmanian red spot dragonfly,Insect,1617,1,0,0.4,Google dragonfly estimate https://pratt.duke.edu/about/news/tracking-dragonflies-wing; emailed Mike Driessen
+Austroaeschna flavomaculata ,6,1,Alpine darner,Insect,2228,1,0,0.4,Google dragonfly estimate https://pratt.duke.edu/about/news/tracking-dragonflies-wing; (Theischinger 1982: 40mm abdomen)
+Coloburiscoides giganteus,10,1,Mayfly,Insect,2228,1,1,0.1,Mass estimate is a guess
+Dirce aesiodora,12,0,Pencil pine moth,Insect,1617,1,1,0.5,emailed Mike Driessen
+Kosciuscola tristis ,19,0,Thermocolour grasshopper ,Insect,2228,1,1,0.4,Rachel Slatyer
+Leioproctus obscurus,20,0,Leioproctus bee,Insect,2228,1,1,0.1,https://bigislandbees.com/blogs/bee-blog/14137349-interesting-bee-honey-facts
+Monistria concinna,23,0,Spotted mountain grasshopper ,Insect,2228,0,0,0.95,"Green, K. 1981, unpublished data"
+Oncopera alpina,27,0,Swift moth,Insect,2228,1,1,0.5,Mass estimate is a guess
+Percolestus blackburni,29,0,Carabid beetle,Insect,2228,1,0,0.1,Mass estimate is a guess
+Polyzosteria viridissima ,31,0,Kosciuszko metallic cockroach ,Insect,2228,1,1,2,Educated estimate
+Tasmanalpina clavata,35,0,Tasmanian velvet grasshopper,Insect,1617,0,1,0.4,Emailed Mike Driessen; mass estimate at the moment is the same as tristis
+Thaumatoperla alpina ,36,1,Alpine stonefly,Insect,2228,1,1,0.89,Data from Julia Mynott
+Eulamprus kosciuskoi,16,0,Alpine water skink,Lizard,2228,1,1,8.3,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 80mm SVL; mass from skink allometry paper "
+Liopholis guthega,21,0,Guthega skink,Lizard,2228,0,0,24,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 96mm SVL; 18g from equation in skink allometry paper; Email from Zak Atkins on measured masses: NSW pop mean 29.3g, Vic pop mean 18.5g, mean of the two is 23.9g"
+Niveoscincus greeni,24,0,Northern snow skink ,Lizard,1617,0,0,4.6,Caldwell et al 2017; 62mm SVL
+Niveoscincus microlepidotus,25,0,Southern snow skink,Lizard,1617,1,1,4.65,Caldwell et al 2017; 62mm SVL
+Pseudemoia cryodroma,32,0,Alpine bog skink,Lizard,2228,1,1,4.5,Maggie Haines
+Rankinia diemensis,34,0,Mountain dragon,Lizard,2228,1,1,10,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 75mm SVL; Mass from herp allometry paper"
+Burramys parvus,8,0,Mountain pygmy possum ,Mammal,2228,1,1,40,Kortner & Geiser 1998
+Mastacomys fuscus,22,0,Broad-toothed rat ,Mammal,2228,1,1,117.5,"Green, K & Osborne, W. 2012, Wildlife of the Australian Snow Country, New Holland Publishers, Frenchs Forest, Australia"
+Austrelaps ramsayi,5,0,Highland copperhead,Snake,2228,1,1,559,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 1300mm SVL; estimate from equation = 557g; estimate from graphing in Excel = 315g"
+Drysdalia coronoides,14,0,White-lipped snake ,Snake,2228,0,0,31,"Cogger, H.G. 2014. Reptiles and Amphibians of Australia, 7th Edition, CSIRO Publishing, Collingwood, Victoria, Australia: 400mm SVL; 31g from equation in paper; 52g from equation in Excel"
+Venatrix funesta,37,0,Wolf spider,Spider,2228,1,0,2,Mass estimate is a guess
+Notoscolex montiskosciuskoi,26,0,Kosciuszko earthworm,Worm,2228,1,0,2,"Wood 1974, Journal of Animal Ecology"

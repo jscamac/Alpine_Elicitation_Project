@@ -5,12 +5,14 @@
 #' @param data Dataframe derived from \code{compile_plant_data()}.
 #' @param type Character. Can be either species or community. Default = "species"
 #' This dictates whether one is interested in community level responses or spp level responses
+#' @param trait_path Character. Path to csv file containing species trait data. Default = NULL.
+#' Only relevant when type = "species".
 #' @details This function takes best estimates of current and future cover and determines the number of responses indicating
 #' no change, positive change or negative change
 #' @importFrom dplyr tidyr
 #' @export
 
-plant_direction_frequencies <- function(data, type = "species") {
+plant_direction_frequencies <- function(data, type = "species", trait_path = NULL) {
   
   if(!type %in% c("species", "community")) {
     stop('type must be either "species" or "community"')
@@ -54,24 +56,30 @@ plant_direction_frequencies <- function(data, type = "species") {
                                                   "Feldmark")))
   }
   
-  data %>%
-    select(Species, Name, State, Expert_ID, Community, Q50th) %>%
+  data <- data %>%
+    select(Species_name, Spp_short, State, Expert_ID, Community, Q50th) %>%
     tidyr::spread(State,Q50th) %>%
     dplyr::mutate(Change = Future - Current,
                   no_change = ifelse(Change ==0,1,0),
                   negative_change = ifelse(Change <0,1,0),
                   positive_change = ifelse(Change >0,1,0)) %>%
-    dplyr::group_by(Species, Community) %>%
+    dplyr::group_by(Species_name, Spp_short, Community) %>%
     dplyr::summarise(N = n(),
                      no_change = sum(no_change),
                      negative_change = sum(negative_change),
                      positive_change = sum(positive_change),
                      negative_rank = sum(negative_change)) %>%
-    tidyr::gather(Direction, Responses, -Species,-Community, -N, -negative_rank) %>%
+    tidyr::gather(Direction, Responses, -Species_name, -Spp_short,-Community, -N, -negative_rank) %>%
     dplyr::mutate(Direction = factor(Direction, 
                                      levels = c("positive_change",
                                                 "no_change",
                                                 "negative_change")),
                   Responses_prop = Responses/N) %>%
     ungroup()
+  
+  if(!is.null(trait_path) & type == "species") {
+    data <- append_plant_traits(data = data,
+                                trait_path = trait_path)
+  }
+  data
 }

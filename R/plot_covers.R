@@ -19,11 +19,7 @@ plot_covers <- function(data,
                         height = NA,
                         units = c("in", "cm", "mm")) {
   
-  colorblind_spp <- c("#009E73","#E69F00","#CC79A7","#0072B2","#D55E00")
-  colorblind_comm <- c("#009E73", "#E69F00", "#CC79A7", "#F0E442","#56B4E9", "#000000", "#0072B2","#D55E00","#999999")
-  
   out <- ggplot2::ggplot(data= data, ggplot2::aes(x = mean_current, y = mean_future)) +
-    ggplot2::geom_point(size = 0.5) + 
     ggplot2::geom_abline(intercept = 0, slope =1, linetype = 2, alpha = 0.5) + 
     ggplot2::geom_linerange(ggplot2::aes(ymin = l95ci_future, ymax=u95ci_future), alpha = 0.7, size = 0.25) +
     ggplot2::theme_bw() +
@@ -32,19 +28,28 @@ plot_covers <- function(data,
     xlab("Current Cover (%)")
   
   if(type == "species") {
-    out <-  out + ggplot2::geom_errorbarh(ggplot2::aes(xmin = l95ci_current, xmax=u95ci_current), alpha = 0.7, size = 0.25) +
+    out <-  out + 
+      ggplot2::geom_errorbarh(ggplot2::aes(xmin = l95ci_current, xmax=u95ci_current), alpha = 1, size = 0.25) +
+      ggplot2::geom_point(size =2, aes(shape = Growth_form), fill="black") +
+      ggplot2::scale_shape_manual("", values = c(15,16,23,17,25)) + # This removes the + symbol
       ggplot2::facet_wrap(~Community, nrow=1, scales="free_y") +
       ggplot2::scale_x_log10(limits = c(min(data$l95ci_current), max(data$u95ci_current))) +
-      ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future)))
-    
-    if(isTRUE(add_labels)) {
-      out <- out + geom_text_repel(aes(label=Species), box.padding=1, force=10, colour = "red", size=2, segment.alpha=0.4, 
-                                   segment.size = 0.3, fontface ="italic") 
-    }
-    
-  } else {
-    out <- out + geom_text_repel(aes(label=Community), box.padding=1, force=2, colour = "red", size=2, segment.alpha=0.4,
-                                 segment.size = 0.3) 
+      ggplot2::scale_y_log10(limits = c(min(data$l95ci_future), max(data$u95ci_future))) +
+      ggplot2::theme(legend.position = "bottom")
+  }
+  
+  if(type == "community") {
+    out <- out + geom_point()
+  }
+  
+  if(isTRUE(add_labels) & type == "species") {
+    out <- out + geom_text_repel(ggplot2::aes(label=Spp_id),box.padding=1.5, force=3, size=3,colour = "red", segment.alpha=0.5, 
+                                 segment.size = 0.3, min.segment.length = 0.1) 
+  }
+  
+  if(isTRUE(add_labels) & type == "community") {
+    out <- out + geom_text_repel(ggplot2::aes(label=Community), box.padding=0.5, colour = "red",force=2, size=2, segment.alpha=0.5,
+                                 segment.size = 0.3, min.segment.length = 0.1) 
   }
   
   # outfile supplied

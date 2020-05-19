@@ -17,5 +17,8 @@ compile_plant_data <- function(answers_path, metadata_path) {
     dplyr::mutate(State = factor(ifelse(State == "%cover now", "Current", 
                                         ifelse(State == "%cover in the past", "Current", "Future"))),
                   Q50th = ifelse(!is.na(Answer),Answer, Q50th),
-                  Species = sub('^(.)\\S+', '\\1.', Name)) # Hack to fix the community data current estimates
+                  Spp_short = sub('^(.)\\S+', '\\1.', Species_name)) %>% # Short species name
+    dplyr::select(Q_type, Q_ID, Species_name, Spp_short, 
+                  Community, State, Answer, Grps_discussed, Expert_ID, 
+                  Expert_type, Q5th, Q50th, Q95th)
 }

@@ -4,13 +4,15 @@
 #'
 #' @param data Dataframe derived from \code{compile_plant_data()}.
 #' @param type Character. Can be either species or community. Default = "species"
+#' @param trait_path Character. Path to csv file containing species trait data. Default = NULL.
+#' Only relevant when type = "species".
 #' This dictates whether one is interested in community level responses or spp level responses
 #' @details This function takes percentages, logit transforms them, calculates mean
 #'  and lower and upper 95 confidence intervals and then backtransforms to non-logit scale
 #' @importFrom dplyr tidyr
 #' @export
 
-summarise_plant_data <- function(data, type = "species") {
+summarise_plant_data <- function(data, type = "species", trait_path = NULL) {
   
   if(!type %in% c("species", "community")) {
     stop('type must be either "species" or "community"')
@@ -54,11 +56,11 @@ summarise_plant_data <- function(data, type = "species") {
                                                   "Feldmark")))
   }
   
-  data %>%
-    dplyr::select(Species, Name, Community, Expert_ID, State, Q50th) %>%
+  data <- data %>%
+    dplyr::select(Species_name, Spp_short, Community, Expert_ID, State, Q50th) %>%
     tidyr::spread(State, Q50th) %>%
     dplyr::mutate(AC = (Future - Current)/(Future + Current)) %>%
-    dplyr::group_by(Species,Name,Community) %>%
+    dplyr::group_by(Species_name,Spp_short,Community) %>%
     dplyr::summarise(N = n(),
                      lmn_curr = mean(qlogis(Current/100)),
                      ll95ci_curr = lmn_curr - (1.96 * sd(qlogis(Current/100))/sqrt(N)),
@@ -75,6 +77,13 @@ summarise_plant_data <- function(data, type = "species") {
                      mean_AC = mean(AC),
                      l95ci_AC = mean_AC - 1.96 * sd(AC)/sqrt(N),
                      u95ci_AC = mean_AC + 1.96 * sd(AC)/sqrt(N)) %>%
-    dplyr::select(Species, Name, Community, N, mean_current, l95ci_current, u95ci_current,
+    dplyr::select(Species_name, Spp_short, Community, N, mean_current, l95ci_current, u95ci_current,
                   mean_future, l95ci_future, u95ci_future, mean_AC, l95ci_AC, u95ci_AC)
+  
+  if(!is.null(trait_path) & type == "species") {
+    data <- append_plant_traits(data = data,
+                                trait_path = trait_path)
+  }
+  
+  data
 }

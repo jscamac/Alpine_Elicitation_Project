@@ -20,29 +20,34 @@ plot_plant_directions <- function(data,
   
   if(type == "species") {
     data <- data %>% 
-      dplyr::mutate(lab = paste0(Species, " (", N,")"),
-                    lab = ifelse(Direction=="negative_change", lab, NA),
-      )
+      dplyr::mutate(shape = sapply(Growth_form, function(x) switch(x, 
+                                                                   Forb = "9632", 
+                                                                   Graminoid = "9679", 
+                                                                   Moss = "9830",
+                                                                   Shrub = "9650",
+                                                                   Tree = "9660")),
+                    lab = paste0(Spp_id,". ",Spp_short, " (",intToUtf8(shape, multiple=TRUE),")"),
+                    lab = ifelse(Direction=="negative_change", lab, NA))
     
-    p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species, negative_rank), y=Responses_prop, label = lab)) +
+    p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species_name, negative_rank), y=Responses_prop, label = lab)) +
       ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-      ggplot2::geom_text(ggplot2::aes(y=0), position="identity", size=2, vjust = 0.5, hjust = -0.05,
+      scale_x_discrete(expand=c(0,1)) +
+      ggplot2::geom_text(ggplot2::aes(y=0), position="identity", size=2.5, vjust = -0.8, hjust = -0.05,
                          fontface='italic') +
       ggplot2::facet_wrap(~Community, ncol = 5, scale="free", shrink = FALSE)
   } else {
     
     data <- data %>% 
-      dplyr::mutate(lab = paste0(Community, " (", N,")"),
+      dplyr::mutate(lab = as.character(Community),
                     lab = ifelse(Direction=='negative_change', lab, NA))
     
     p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Community, negative_rank), y=Responses_prop, label = lab)) +
       ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-      ggplot2::geom_text(ggplot2::aes(y=0), position= "identity", size=2, vjust = 0.5, hjust = -0.05)
+      ggplot2::geom_text(ggplot2::aes(y=0), position= "identity", size=2.5, vjust = 0.5, hjust = -0.05)
   }
   
-  out <- p1 + 
-    ggplot2::scale_fill_manual("",values = c(negative_change = "#E69F00", no_change = "#CC79A7", positive_change = "#0072B2"),
-                               labels=c("Positive change", "No change", "Negative change")) +
+  out <- p1 +
+    scale_fill_grey("",start= 0.3,end = 0.8,labels=c("Increase", "No change", "Decrease")) +
     ggplot2::scale_y_continuous(expand=c(0,0), breaks = c(0, .25, .5, .75, 1),
                                 labels=c("0", ".25", ".5", ".75", "1")) +
     ggplot2::coord_flip() +

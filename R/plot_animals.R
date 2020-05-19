@@ -27,13 +27,16 @@ plot_animals <- function(data,
   
   #colorblind_pallette <- c("#D55E00", "#0072B2", "#CC79A7","#E69F00", "#000000","#009E73", "#56B4E9")
   
-  out <- ggplot2::ggplot(data= data, ggplot2::aes(x = mean_current, y = mean_future)) +
-    ggplot2::geom_point(size =0.5) + 
+  out <- ggplot2::ggplot(data= data, ggplot2::aes(x = mean_current, y = mean_future, shape = Taxon)) +
+    ggplot2::geom_point(aes(shape = Taxon), fill="black") + 
+    ggplot2::scale_shape_manual("", values = c(0,15,1,16,23,17,25)) + # This removes the + symbol
     ggplot2::geom_abline(intercept = 0, slope =1, linetype = 2, alpha =0.5) + 
     ggplot2::geom_linerange(ggplot2::aes(ymin = l95ci_future, ymax=u95ci_future), size=0.25, alpha = 0.7) +
     ggplot2::geom_errorbarh(ggplot2::aes(xmin = l95ci_current, xmax=u95ci_current), size= 0.25, alpha = 0.7) +
     ggplot2::theme_bw() +
-    ggplot2::theme(legend.position = "bottom", panel.grid = element_blank()) +
+    ggplot2::theme(legend.direction = "horizontal",
+                   legend.position = "bottom", panel.grid = element_blank()) +
+    guides(shape = guide_legend(nrow = 1)) +
     ylab(ylabel) +
     xlab(xlabel)
   
@@ -44,7 +47,7 @@ plot_animals <- function(data,
   
 
   if(isTRUE(add_labels)) {
-    out <- out + geom_text_repel(aes(label=Species), box.padding=1.5, force=20, colour = "red", size=1.5, segment.alpha=0.4, 
+    out <- out + geom_text_repel(aes(label=SPP_ID), box.padding=1.5, force=3, colour = "red", size=2.5, segment.alpha=0.4, 
                                  segment.size = 0.3, fontface="italic") 
   }
   
