@@ -27,12 +27,13 @@ plot_animal_directions <- function(data,
                                                                  Frog = "9830",
                                                                  Lizard = "9650",
                                                                  Mammal = "9660")),
-                  lab = paste0(SPP_ID,". ",Species, " (", N,"; ",intToUtf8(shape, multiple=TRUE),")"),
+                  lab = paste0(Plot_ID,". ",Species, " (", N,"; ",intToUtf8(shape, multiple=TRUE),")"),
                   lab = ifelse(Direction=="negative_change", lab, NA))
   
   p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species, negative_rank), y=Responses_prop, label = lab)) +
     ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-    ggplot2::geom_text(ggplot2::aes(y=0), position='identity',  vjust = 0.5, hjust = -0.05, size=2.5, 
+    scale_x_discrete(expand=c(0,1)) +
+    ggplot2::geom_text(ggplot2::aes(y=0), position='identity',  size=2,  vjust = -0.7, hjust = -0.05, 
                        fontface='italic')
   if(!is.null(facet_by)) {
     if(facet_by == "Water_centric") {
@@ -44,7 +45,7 @@ plot_animal_directions <- function(data,
   }
   
   out <- p1 + 
-    scale_fill_grey("",start= 0.65,end = 0.9,labels=c("Increase", "No change", "Decrease")) +
+    scale_fill_grey("",start= 0.3,end = 0.8,labels=c("Increase", "No change", "Decrease")) +
     ggplot2::scale_y_continuous(expand=c(0,0), breaks = c(0, .25, .5, .75, 1),
                                 labels=c("0", ".25", ".5", ".75", "1")) +
     ggplot2::coord_flip() +

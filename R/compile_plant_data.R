@@ -4,8 +4,7 @@
 #'
 #' @param answers_path Character. Path to plant expert answers csv file.
 #' @param metadata_path Character. Path to metadata on plant expert questions
-#' @details This function takes percentages, logit transforms them, calculates mean
-#'  and lower and upper 95 confidence intervals and then backtransforms to non-logit scale
+#' @details Collates plant expert data into a dataframe
 #' @importFrom dplyr
 #' @export
 

@@ -15,7 +15,7 @@ compile_animal_data <- function(expert_file, q_file, trait_file) {
   data %>% 
     dplyr::left_join(questions, by = "Q_ID") %>%
     dplyr::left_join(traits, by = "SPP_ID") %>%
-    dplyr::select(Expert_ID, Q_ID, Q_TYPE, SPP_ID, Species,  Water_centric, Taxon, Mass_g, Q5th, Q50th, Q95th) %>%
+    dplyr::select(Expert_ID, Q_ID, Q_TYPE, SPP_ID, Plot_ID, Species,  Water_centric, Taxon, Mass_g, Q5th, Q50th, Q95th) %>%
     dplyr::filter(!SPP_ID %in% c(26,29,37)) %>%
     # Removed  V. funesta, N. montiskosciuskoi & P. blackburni as each had less than 4 expert answers for either current or future.
     dplyr::mutate(

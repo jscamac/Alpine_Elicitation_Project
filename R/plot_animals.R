@@ -47,7 +47,7 @@ plot_animals <- function(data,
   
 
   if(isTRUE(add_labels)) {
-    out <- out + geom_text_repel(aes(label=SPP_ID), box.padding=1.5, force=3, colour = "red", size=2.5, segment.alpha=0.4, 
+    out <- out + geom_text_repel(aes(label=Plot_ID), box.padding=1.5, force=3, colour = "red", size=2.5, segment.alpha=0.4, 
                                  segment.size = 0.3, fontface="italic") 
   }
   

@@ -11,6 +11,8 @@ plan <- drake::drake_plan(
   plant_community_directions =
     plant_direction_frequencies(data = compiled_plant_data,
                                 type = "community"),
+  
+  # FIG 1 - community responses
   fig1 = ggplot2::ggsave(plot = 
                            cowplot::plot_grid(
                              plot_covers(data = plant_community_summary,
@@ -32,18 +34,14 @@ plan <- drake::drake_plan(
     summarise_plant_data(data = compiled_plant_data,
                          type = "species",
                          trait_path = file_in("raw_data/plant_data/species_traits.csv")),
-  
-  plot_spp_covers =
-    plot_covers(data = plant_spp_summary,
-                type = "species"),
-  
+
   # Count number of experts by direction for species level
   plant_spp_directions =
     plant_direction_frequencies(data = compiled_plant_data,
                                 type = "species",
                                 trait_path = file_in("raw_data/plant_data/species_traits.csv")),
   
-  ## FIGURE 2
+  ## Fig 2 - Species responses
   fig2 = ggplot2::ggsave(plot = 
                            cowplot::plot_grid(
                              plot_covers(data = plant_spp_summary,
@@ -59,227 +57,150 @@ plan <- drake::drake_plan(
                          filename = file_out("outputs/fig2.pdf"),
                          device=cairo_pdf, 
                          family ="Arial Unicode MS"),
-
-plant_spp_trait_plots =
-  plot_scatter(data = plant_spp_summary,
-               response = "mean_AC",
-               predictor = c("Mean_ht_mm",
-                             "Leaf_area_mm2",
-                             "SLA_mm2mg1",
-                             "Diaspore_mg",
-                             "Dispersal_dist_m"),
-               predictor_labels = c("Mean~ht~(mm)",
-                                    "Leaf~area~(mm^2)",
-                                    "SLA~(mm^{2}*mg^{-1})",
-                                    "Diaspore~(mg)",
-                                    "Dispersal~dist~(m)"),
-               xlab ="Log10(traits values)",
-               ylab ="(Future - Current)/(Future + Current)",
-               alpha = 0.6,
-               ncol=3,
-               zero_line=TRUE,
-               scale= "free",
-               logx = TRUE,
-               show_correlation = TRUE,
-               outfile = file_out("outputs/plant_spp_traits.pdf"),
-               width = 7,
-               height = 6),
-
-plant_cat_traits_plots =
-  plot_scatter(data = plant_spp_summary,
-               response = "mean_AC",
-               predictor = c("Growth_form",
-                             "Resprouter",
-                             "Pollination",
-                             "Dispersal_mode"),
-               predictor_labels = c("Growth~form",
-                                    "Resprouter",
-                                    "Pollinator",
-                                    "Dispersal~mode"),
-               xlab ="Categorical traits",
-               ylab = "(Future - Current)/(Future + Current)",
-               alpha = 0.6,
-               ncol=2,
-               zero_line= TRUE,
-               scale="free",
-               logx = FALSE,
-               outfile = file_out("outputs/plant_cat_traits.pdf"),
-               width = 7,
-               height = 7),
-
-plant_envion_trait_plots =
-  plot_scatter(data = plant_spp_summary,
-               response = "mean_AC",
-               predictor = c("altitude_min",
-                             "altitude_max",
-                             "altitude_range",
-                             "MAT_min",
-                             "MAT_max",
-                             "MAT_range",
-                             "Extent",
-                             "Area"),
-               predictor_labels = c("Min~altitude~(m)",
-                                    "Max~altitude~(m)",
-                                    "Altitude~range~(m)",
-                                    "Min~MAT~(~degree*C)",
-                                    "Max~MAT~(~degree*C)",
-                                    "MAT~range~(~degree*C)",
-                                    "Extent~occupied~(km^2)",
-                                    "Area~occupied~(km^2)"),
-               
-               xlab ="Environmental traits",
-               ylab ="(Future - Current)/(Future + Current)",
-               alpha = 0.6,
-               ncol=3,
-               zero_line=TRUE,
-               scale = "free",
-               show_correlation = TRUE,
-               logx = TRUE,
-               outfile = file_out("outputs/plant_enviro_traits.pdf"),
-               width = 7,
-               height = 6),
-
-
-## ANIMAL DATA
-## ABUNDANCE
-animal_data =
-  compile_animal_data(expert_file = file_in("raw_data/animal_data/animal_expert_answers.csv"),
-                      q_file = file_in("raw_data/animal_data/animal_question_meta.csv"),
-                      trait_file = file_in("raw_data/animal_data/animal_trait_data.csv")),
-
- animal_abund_summary = 
-   summarise_animal_data(data = animal_data, 
-                         Q_IDs = c("3A", "3B"),
-                         mass_convert = FALSE) %>% 
-   dplyr::filter(SPP_ID != 2), # Remove Bogong Moth for now (too big an outlier)
-
-animal_abund_directions =
-   animal_spp_direction_frequencies(data = animal_data,
-                                    Q_IDs = c("3A", "3B")),
-
- fig3 =
-   ggplot2::ggsave(cowplot::plot_grid(
-     plot_animals(data = animal_abund_summary %>% filter(SPP_ID !=2),
-                  add_labels = TRUE,
-                  log_scale = TRUE,
-                  facet_by = "Water_centric",
-                  ylabel = expression(paste("Future abundance (100",~m^2, ")")),
-                  xlabel = expression(paste("Current abundance (100",~m^2, ")"))),
-     plot_animal_directions(data = animal_abund_directions,
-                            facet_by = "Water_centric"),
-     nrow=2,
-     align="v",
-     labels ="AUTO",
-     hjust =-3),
-     width = 7.25,
-     height = 7.25,
-     filename = file_out("outputs/fig3.pdf"),
-     device=cairo_pdf, 
-     family ="Arial Unicode MS"),
-     
-## Elevation
-
-animal_elev_summary = 
-  summarise_animal_data(data = animal_data, 
-                         Q_IDs = c("1A", "1B"),
-                         mass_convert = FALSE) %>%
-  dplyr::mutate(elev_type = "min") %>%
-  dplyr::bind_rows(summarise_animal_data(data = animal_data, 
-                                         Q_IDs = c("2A", "2B"),
-                                         mass_convert = FALSE) %>%
-                     dplyr::mutate(elev_type = "max"))
- 
-# animal_scatter_plots_LowElev =
-#   plot_animals(data = animal_spp_summary_LowElev,
-#                add_labels = TRUE,
-#                log_scale = FALSE,
-#                facet_by = "Water_centric",
-#                ylabel = "Future minimum elevation (m)",
-#                xlabel = "Current minimum elevation (m)",
-#                outfile = drake::file_out("outputs/animal_scatter_LowElev.pdf"),
-#                width = 7,
-#                height = 5),
-#                                     
-# animal_spp_directions_LowElev =
-#   animal_spp_direction_frequencies(data = animal_data,
-#                                    Q_IDs = c("1A", "1B")),
-# 
-# plot_animal_direction_water_LowElev =
-#   plot_animal_directions(data = animal_spp_directions_LowElev, 
-#                          facet_by = "Water_centric",
-#                          outfile = file_out("outputs/animal_water_LowElev.pdf"),
-#                          width = 7,
-#                          height = 5),
-# 
-# animal_spp_summary_HighElev = 
-#   summarise_animal_data(data = animal_data, 
-#                         Q_IDs = c("2A", "2B"),
-#                         mass_convert = FALSE),
-# 
-# animal_scatter_plots_HighElev =
-#   plot_animals(data = animal_spp_summary_HighElev,
-#                add_labels = TRUE,
-#                facet_by = "Water_centric",
-#                log_scale = FALSE,
-#                ylabel = "Future maximum elevation (m)",
-#                xlabel = "Current maximum elevation (m)",
-#                outfile = drake::file_out("outputs/animal_scatter_HighElev.pdf"),
-#                width = 7,
-#                height = 5),
-# 
-# animal_spp_directions_HighElev =
-#   animal_spp_direction_frequencies(data = animal_data,
-#                                    Q_IDs = c("2A", "2B")),
-# 
-# plot_animal_direction_water_HighElev =
-#   plot_animal_directions(data = animal_spp_directions_HighElev, 
-#                          facet_by = "Water_centric",
-#                          outfile = file_out("outputs/animal_water_directions_HighElev.pdf"),
-#                          width = 7,
-#                          height = 5),  
-# 
-# animal_spp_summary_abundance = 
-#   summarise_animal_data(data = animal_data, 
-#                         Q_IDs = c("3A", "3B"),
-#                         mass_convert = FALSE) %>% 
-#   dplyr::filter(SPP_ID != 2), # Remove Bogong Moth for now
-# 
-# 
-# animal_spp_summary_mass = 
-#   summarise_animal_data(data = animal_data, 
-#                         Q_IDs = c("3A", "3B"),
-#                         mass_convert = TRUE)  %>% # Remove Bogong Moth for now,
-#   dplyr::filter(SPP_ID != 2),
-# 
-# animal_scatter_plots_3 =
-#   ggplot2::ggsave(cowplot::plot_grid(plot_animals(data = animal_spp_summary_abundance %>% filter(SPP_ID !=2),
-#                                   add_labels = TRUE,
-#                                   log_scale = TRUE,
-#                                   facet_by = "Water_centric",
-#                                   ylabel = expression(paste("Future abundance (100",~m^2, ")")),
-#                                   xlabel = expression(paste("Current abundance (100",~m^2, ")"))),
-#                      
-#                      plot_animals(data = animal_spp_summary_mass %>% filter(SPP_ID !=2),
-#                                   add_labels = TRUE,
-#                                   log_scale = TRUE,
-#                                   facet_by = "Water_centric",
-#                                   ylabel = expression(paste("Future mass (g/100",~m^2, ")")),
-#                                   xlabel = expression(paste("Current mass (g/100",~m^2, ")"))), 
-#                      nrow = 2, labels =LETTERS),
-#                   filename = file_out("outputs/animal_scatter3AB.pdf"),
-#                   width = 7,
-#                   height = 7),
-# 
-# animal_spp_directions3 =
-#   animal_spp_direction_frequencies(data = animal_data,
-#                                    Q_IDs = c("3A", "3B")),
-# 
-# plot_animal_direction_water3 =
-#   plot_animal_directions(data = animal_spp_directions3, 
-#                          facet_by = "Water_centric",
-#                          outfile = file_out("outputs/animal_water_directions3AB.pdf"),
-#                          width = 7,
-#                          height = 5)
+  
+  
+  ## ANIMAL DATA
+  ## ABUNDANCE
+  animal_data =
+    compile_animal_data(expert_file = file_in("raw_data/animal_data/animal_expert_answers.csv"),
+                        q_file = file_in("raw_data/animal_data/animal_question_meta.csv"),
+                        trait_file = file_in("raw_data/animal_data/animal_trait_data.csv")),
+  
+  animal_abund_summary = 
+    summarise_animal_data(data = animal_data, 
+                          Q_IDs = c("3A", "3B"),
+                          mass_convert = FALSE) %>% 
+    dplyr::filter(SPP_ID != 2), # Remove Bogong Moth for now (too big an outlier)
+  
+  animal_abund_directions =
+    animal_spp_direction_frequencies(data = animal_data,
+                                     Q_IDs = c("3A", "3B")),
+  # Fig 3 Animal abundance responses
+  fig3 =
+    ggplot2::ggsave(cowplot::plot_grid(
+      plot_animals(data = animal_abund_summary %>% filter(SPP_ID !=2),
+                   add_labels = TRUE,
+                   log_scale = TRUE,
+                   facet_by = "Water_centric",
+                   ylabel = expression(paste("Future abundance (100",~m^2, ")")),
+                   xlabel = expression(paste("Current abundance (100",~m^2, ")"))),
+      plot_animal_directions(data = animal_abund_directions,
+                             facet_by = "Water_centric"),
+      nrow=2,
+      align="v",
+      labels ="AUTO",
+      hjust =-3),
+      width = 7.25,
+      height = 7.25,
+      filename = file_out("outputs/fig3.pdf"),
+      device= cairo_pdf, 
+      family ="Arial Unicode MS"),
+  
+  ## Elevation
+  
+  animal_elev_summary = 
+    summarise_animal_data(data = animal_data, 
+                          Q_IDs = c("1A", "1B"),
+                          mass_convert = FALSE) %>%
+    dplyr::mutate(elev_type = "Minimum elevation") %>%
+    dplyr::select(-N) %>% # Need to remove N because some experts didn't answer both sets of Q's
+    dplyr::bind_rows(summarise_animal_data(data = animal_data, 
+                                           Q_IDs = c("2A", "2B"),
+                                           mass_convert = FALSE) %>%
+                       dplyr::mutate(elev_type = "Maximum elevation") %>%
+                       dplyr::select(-N)) %>%
+    dplyr::bind_rows(summarise_elevrange(data = animal_data) %>%
+                       dplyr::mutate(elev_type = "Elevation range")) %>%
+    dplyr::filter(!SPP_ID %in% c(20, 21)),
+  
+  # Fig 4 Animal elevation plots
+  fig4 = 
+    plot_animals(data = animal_elev_summary,facet_by = c("Water_centric", "elev_type"), 
+                 ncol=3, log_scale = FALSE,
+                 xlab ="Current elevation (m)",
+                 ylab ="Future elevation (m)",
+                 width = 7.25,
+                 height = 6,
+                 outfile = file_out("outputs/fig4.pdf")),
+  # Fig 6 environmental traits
+  fig6 =
+    plot_scatter(data = plant_spp_summary,
+                 response = "mean_AC",
+                 predictor = c("altitude_min",
+                               "altitude_max",
+                               "altitude_range",
+                               "MAT_min",
+                               "MAT_max",
+                               "MAT_range",
+                               "Extent",
+                               "Area"),
+                 predictor_labels = c("Min~altitude~(m)",
+                                      "Max~altitude~(m)",
+                                      "Altitude~range~(m)",
+                                      "Min~MAT~(~degree*C)",
+                                      "Max~MAT~(~degree*C)",
+                                      "MAT~range~(~degree*C)",
+                                      "Extent~occupied~(km^2)",
+                                      "Area~occupied~(km^2)"),
+                 
+                 xlab ="Environmental traits",
+                 ylab ="(Future - Current)/(Future + Current)",
+                 alpha = 0.6,
+                 ncol=3,
+                 zero_line=TRUE,
+                 scale = "free",
+                 show_correlation = TRUE,
+                 logx = TRUE,
+                 outfile = file_out("outputs/fig6.pdf"),
+                 width = 7,
+                 height = 6),
+  # Fig 7 - Species traits
+  fig7 =
+    plot_scatter(data = plant_spp_summary,
+                 response = "mean_AC",
+                 predictor = c("Mean_ht_mm",
+                               "Leaf_area_mm2",
+                               "SLA_mm2mg1",
+                               "Diaspore_mg",
+                               "Dispersal_dist_m"),
+                 predictor_labels = c("Mean~ht~(mm)",
+                                      "Leaf~area~(mm^2)",
+                                      "SLA~(mm^{2}*mg^{-1})",
+                                      "Diaspore~(mg)",
+                                      "Dispersal~dist~(m)"),
+                 xlab ="Log10(traits values)",
+                 ylab ="(Future - Current)/(Future + Current)",
+                 alpha = 0.6,
+                 ncol=3,
+                 zero_line=TRUE,
+                 scale= "free",
+                 logx = TRUE,
+                 show_correlation = TRUE,
+                 outfile = file_out("outputs/fig7.pdf"),
+                 width = 7,
+                 height = 6),
+  # Fig supp
+  supp_fig_cat_traits =
+    plot_scatter(data = plant_spp_summary,
+                 response = "mean_AC",
+                 predictor = c("Growth_form",
+                               "Resprouter",
+                               "Pollination",
+                               "Dispersal_mode"),
+                 predictor_labels = c("Growth~form",
+                                      "Resprouter",
+                                      "Pollinator",
+                                      "Dispersal~mode"),
+                 xlab ="Categorical traits",
+                 ylab = "(Future - Current)/(Future + Current)",
+                 alpha = 0.6,
+                 ncol=2,
+                 zero_line= TRUE,
+                 scale="free",
+                 logx = FALSE,
+                 outfile = file_out("outputs/supp_fig_cat_traits.pdf"),
+                 width = 7,
+                 height = 7)
 )
 
 

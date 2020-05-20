@@ -43,7 +43,8 @@ plot_plant_directions <- function(data,
     
     p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Community, negative_rank), y=Responses_prop, label = lab)) +
       ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
-      ggplot2::geom_text(ggplot2::aes(y=0), position= "identity", size=2.5, vjust = 0.5, hjust = -0.05)
+      scale_x_discrete(expand=c(0,1)) +
+      ggplot2::geom_text(ggplot2::aes(y=0), position= "identity", size=2, vjust = -0.8, hjust = -0.05)
   }
   
   out <- p1 +
