@@ -60,20 +60,20 @@ plant_direction_frequencies <- function(data, type = "species", trait_path = NUL
     select(Species_name, Spp_short, State, Expert_ID, Community, Q50th) %>%
     tidyr::spread(State,Q50th) %>%
     dplyr::mutate(Change = Future - Current,
-                  no_change = ifelse(Change ==0,1,0),
-                  negative_change = ifelse(Change <0,1,0),
-                  positive_change = ifelse(Change >0,1,0)) %>%
+                  `No change` = ifelse(Change ==0,1,0),
+                  Decrease = ifelse(Change <0,1,0),
+                  Increase = ifelse(Change >0,1,0)) %>%
     dplyr::group_by(Species_name, Spp_short, Community) %>%
     dplyr::summarise(N = n(),
-                     no_change = sum(no_change),
-                     negative_change = sum(negative_change),
-                     positive_change = sum(positive_change),
-                     negative_rank = sum(negative_change)) %>%
-    tidyr::gather(Direction, Responses, -Species_name, -Spp_short,-Community, -N, -negative_rank) %>%
+                     `No change` = sum(`No change`),
+                     Decrease = sum(Decrease),
+                     Increase = sum(Increase),
+                     rank = sum(Decrease)/N) %>%
+    tidyr::gather(Direction, Responses, -Species_name, -Spp_short,-Community, -N, -rank) %>%
     dplyr::mutate(Direction = factor(Direction, 
-                                     levels = c("positive_change",
-                                                "no_change",
-                                                "negative_change")),
+                                     levels = c("Increase",
+                                                "No change",
+                                                "Decrease")),
                   Responses_prop = Responses/N) %>%
     ungroup()
   

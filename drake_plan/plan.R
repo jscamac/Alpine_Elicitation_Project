@@ -15,14 +15,14 @@ plan <- drake::drake_plan(
   # FIG 1 - community responses
   fig1 = ggplot2::ggsave(plot = 
                            cowplot::plot_grid(
-                             plot_covers(data = plant_community_summary,
-                                         type = "community"),
                              plot_plant_directions(data = plant_community_directions,
                                                    type = "community"),
+                             plot_covers(data = plant_community_summary,
+                                         type = "community"),
                              nrow=2,
                              align="v",
                              labels ="AUTO",
-                             rel_heights = c(1, 1.25)),
+                             rel_heights = c(1.25, 1)),
                          width = 5,
                          height = 5,
                          filename = file_out("outputs/fig1.pdf"),
@@ -44,10 +44,10 @@ plan <- drake::drake_plan(
   ## Fig 2 - Species responses
   fig2 = ggplot2::ggsave(plot = 
                            cowplot::plot_grid(
-                             plot_covers(data = plant_spp_summary,
-                                         type = "species"),
                              plot_plant_directions(data = plant_spp_directions,
                                                    type = "species"),
+                             plot_covers(data = plant_spp_summary,
+                                         type = "species"),
                              nrow=2,
                              align="v",
                              labels ="AUTO",
@@ -78,14 +78,14 @@ plan <- drake::drake_plan(
   # Fig 3 Animal abundance responses
   fig3 =
     ggplot2::ggsave(cowplot::plot_grid(
+      plot_animal_directions(data = animal_abund_directions,
+                             facet_by = "Water_centric"),
       plot_animals(data = animal_abund_summary %>% filter(SPP_ID !=2),
                    add_labels = TRUE,
                    log_scale = TRUE,
                    facet_by = "Water_centric",
                    ylabel = expression(paste("Future abundance (100",~m^2, ")")),
                    xlabel = expression(paste("Current abundance (100",~m^2, ")"))),
-      plot_animal_directions(data = animal_abund_directions,
-                             facet_by = "Water_centric"),
       nrow=2,
       align="v",
       labels ="AUTO",

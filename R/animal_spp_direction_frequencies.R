@@ -18,19 +18,19 @@ animal_spp_direction_frequencies <- function(data, Q_IDs) {
     tidyr::spread(Q_TYPE,Q50th) %>%
     na.omit %>% # Remove experts that did not provide both answers
     dplyr::mutate(Diff = Future - Current,
-                  no_change = ifelse(Diff == 0, 1,0),
-                  negative_change = ifelse(Diff < 0, 1,0),
-                  positive_change = ifelse(Diff > 0, 1,0)) %>%
+                  `No change` = ifelse(Diff == 0, 1,0),
+                  Decrease = ifelse(Diff < 0, 1,0),
+                  Increase = ifelse(Diff > 0, 1,0)) %>%
     dplyr::group_by(Species, SPP_ID, Plot_ID, Taxon, Water_centric) %>%
     dplyr::summarise(N = n(),
-                     no_change = sum(no_change),
-                     negative_change = sum(negative_change),
-                     positive_change = sum(positive_change),
-                     negative_rank = sum(negative_change)) %>%
-    tidyr::gather(Direction, Responses, -Species, -SPP_ID, -Plot_ID, -Taxon, -Water_centric, -N, -negative_rank) %>%
+                     `No change` = sum(`No change`),
+                     Decrease = sum(Decrease),
+                     Increase = sum(Increase),
+                     rank = sum(Decrease)/N) %>%
+    tidyr::gather(Direction, Responses, -Species, -SPP_ID, -Plot_ID, -Taxon, -Water_centric, -N, -rank) %>%
     dplyr::mutate(Direction = factor(Direction, 
-                                     levels = c("positive_change",
-                                                "no_change",
-                                                "negative_change")),
+                                     levels = c("Increase",
+                                                "No change",
+                                                "Decrease")),
                   Responses_prop = Responses/N)
 }
