@@ -20,7 +20,7 @@ compile_animal_data <- function(expert_file, q_file, trait_file) {
     # Removed  V. funesta, N. montiskosciuskoi & P. blackburni as each had less than 4 expert answers for either current or future.
     dplyr::mutate(
       SPP_ID = as.numeric(as.factor(Species)),# Redo ID without those species
-      Water_centric = ifelse(Water_centric == 1, "Water centric", "Not water centric"),
+      Water_centric = ifelse(Water_centric == 1, "Water-centric", "Not-water-centric"),
                   Taxon =  factor(Taxon,
                                   levels = c("Worm",
                                              "Insect",
@@ -29,5 +29,5 @@ compile_animal_data <- function(expert_file, q_file, trait_file) {
                                              "Frog",
                                              "Lizard",
                                              "Mammal")),
-                  Species = sub('^(.)\\S+', '\\1.', Species))
+                  Species_short = sub('^(.)\\S+', '\\1.', Species))
 }

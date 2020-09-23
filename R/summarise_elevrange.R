@@ -15,10 +15,10 @@ summarise_elevrange <- function(data) {
   
   current <- data %>%
     dplyr::filter(Q_ID %in% c("1A", "2A")) %>%
-    dplyr::select(Q_ID, Expert_ID, SPP_ID, Plot_ID, Species, Water_centric,Taxon, Mass_g, Q50th) %>%
+    dplyr::select(Q_ID, Expert_ID, SPP_ID, Plot_ID, Species, Species_short, Water_centric,Taxon, Mass_g, Q50th) %>%
     tidyr::spread(Q_ID, Q50th) %>%
     na.omit() %>% # Removes experts that provided no answer for particular questions
-    dplyr::group_by(Species, SPP_ID, Plot_ID,Water_centric, Taxon, Mass_g) %>%
+    dplyr::group_by(Species, Species_short, SPP_ID, Plot_ID,Water_centric, Taxon, Mass_g) %>%
     dplyr::summarise(N = n(),
                      mean_current = mean(`2A` - `1A`),
                      l95ci_current = mean_current - (1.96 * sd(`2A` - `1A`)/sqrt(N)),
@@ -27,10 +27,10 @@ summarise_elevrange <- function(data) {
   
   future <- data %>%
     dplyr::filter(Q_ID %in% c("1B", "2B")) %>%
-    dplyr::select(Q_ID, Expert_ID, SPP_ID, Plot_ID, Species, Water_centric,Taxon, Mass_g, Q50th) %>%
+    dplyr::select(Q_ID, Expert_ID, SPP_ID, Plot_ID, Species, Species_short, Water_centric,Taxon, Mass_g, Q50th) %>%
     tidyr::spread(Q_ID, Q50th) %>%
     na.omit() %>% # Removes experts that provided no answer for particular questions
-    dplyr::group_by(Species, SPP_ID, Plot_ID, Water_centric, Taxon, Mass_g) %>%
+    dplyr::group_by(Species, Species_short, SPP_ID, Plot_ID, Water_centric, Taxon, Mass_g) %>%
     dplyr::summarise(N = n(),
                      mean_future = mean(`2B` - `1B`),
                      l95ci_future = mean_future - (1.96 * sd(`2B` - `1B`)/sqrt(N)),
@@ -38,5 +38,5 @@ summarise_elevrange <- function(data) {
     dplyr::select(-N) # Remove N because it differs between future and current
   
   
-  dplyr::left_join(current, future, by = c("Species","SPP_ID","Plot_ID", "Water_centric","Taxon", "Mass_g"))
+  dplyr::left_join(current, future, by = c("Species","Species_short","SPP_ID","Plot_ID", "Water_centric","Taxon", "Mass_g"))
 }

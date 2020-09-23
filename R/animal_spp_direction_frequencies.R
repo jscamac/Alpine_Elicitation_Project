@@ -14,20 +14,20 @@ animal_spp_direction_frequencies <- function(data, Q_IDs) {
   
   data %>%
     dplyr::filter(Q_ID %in% Q_IDs) %>%
-    select(Expert_ID, Species, SPP_ID, Plot_ID, Water_centric, Taxon, Q_TYPE, Q50th) %>%
+    select(Expert_ID, Species, Species_short, SPP_ID, Plot_ID, Water_centric, Taxon, Q_TYPE, Q50th) %>%
     tidyr::spread(Q_TYPE,Q50th) %>%
     na.omit %>% # Remove experts that did not provide both answers
     dplyr::mutate(Diff = Future - Current,
                   `No change` = ifelse(Diff == 0, 1,0),
                   Decrease = ifelse(Diff < 0, 1,0),
                   Increase = ifelse(Diff > 0, 1,0)) %>%
-    dplyr::group_by(Species, SPP_ID, Plot_ID, Taxon, Water_centric) %>%
+    dplyr::group_by(Species, Species_short, SPP_ID, Plot_ID, Taxon, Water_centric) %>%
     dplyr::summarise(N = n(),
                      `No change` = sum(`No change`),
                      Decrease = sum(Decrease),
                      Increase = sum(Increase),
                      rank = sum(Decrease)/N) %>%
-    tidyr::gather(Direction, Responses, -Species, -SPP_ID, -Plot_ID, -Taxon, -Water_centric, -N, -rank) %>%
+    tidyr::gather(Direction, Responses, -Species,-Species_short, -SPP_ID, -Plot_ID, -Taxon, -Water_centric, -N, -rank) %>%
     dplyr::mutate(Direction = factor(Direction, 
                                      levels = c("Increase",
                                                 "No change",

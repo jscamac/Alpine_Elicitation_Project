@@ -25,8 +25,8 @@ plan <- drake::drake_plan(
                              rel_heights = c(1.25, 1)),
                          width = 5,
                          height = 5,
-                         filename = file_out("outputs/fig1.pdf"),
-                         device=cairo_pdf, 
+                         filename = file_out("outputs/fig1.png"),
+                         #device=cairo_png, 
                          family ="Arial Unicode MS"),
   
   # SPECIES DATA
@@ -54,8 +54,8 @@ plan <- drake::drake_plan(
                              hjust =-3),
                          width = 11.69,
                          height = 8.27,
-                         filename = file_out("outputs/fig2.pdf"),
-                         device=cairo_pdf, 
+                         filename = file_out("outputs/fig2.png"),
+                         #device=cairo_pdf, 
                          family ="Arial Unicode MS"),
   
   
@@ -92,8 +92,8 @@ plan <- drake::drake_plan(
       hjust =-3),
       width = 7.25,
       height = 7.25,
-      filename = file_out("outputs/fig3.pdf"),
-      device= cairo_pdf, 
+      filename = file_out("outputs/fig3.png"),
+      #device= cairo_pdf, 
       family ="Arial Unicode MS"),
   
   ## Elevation
@@ -121,9 +121,9 @@ plan <- drake::drake_plan(
                  ylab ="Future elevation (m)",
                  width = 7.25,
                  height = 6,
-                 outfile = file_out("outputs/fig4.pdf")),
+                 outfile = file_out("outputs/fig4.png")),
   # Fig 6 environmental traits
-  fig6 =
+  suppfig_envtraits =
     plot_scatter(data = plant_spp_summary,
                  response = "mean_AC",
                  predictor = c("altitude_min",
@@ -134,9 +134,9 @@ plan <- drake::drake_plan(
                                "MAT_range",
                                "Extent",
                                "Area"),
-                 predictor_labels = c("Min~altitude~(m)",
-                                      "Max~altitude~(m)",
-                                      "Altitude~range~(m)",
+                 predictor_labels = c("Min~elevation~(m)",
+                                      "Max~elevation~(m)",
+                                      "Elevation~range~(m)",
                                       "Min~MAT~(~degree*C)",
                                       "Max~MAT~(~degree*C)",
                                       "MAT~range~(~degree*C)",
@@ -144,18 +144,20 @@ plan <- drake::drake_plan(
                                       "Area~occupied~(km^2)"),
                  
                  xlab ="Environmental traits",
-                 ylab ="(Future - Current)/(Future + Current)",
+                 ylab ="Adaptive capacity",
                  alpha = 0.6,
                  ncol=3,
                  zero_line=TRUE,
                  scale = "free",
                  show_correlation = TRUE,
                  logx = TRUE,
-                 outfile = file_out("outputs/fig6.pdf"),
+                 outfile = file_out("outputs/suppfig_envtraits.png"),
                  width = 7,
                  height = 6),
+
+
   # Fig 7 - Species traits
-  fig7 =
+  suppfig_spptraits =
     plot_scatter(data = plant_spp_summary,
                  response = "mean_AC",
                  predictor = c("Mean_ht_mm",
@@ -169,18 +171,18 @@ plan <- drake::drake_plan(
                                       "Diaspore~(mg)",
                                       "Dispersal~dist~(m)"),
                  xlab ="Log10(traits values)",
-                 ylab ="(Future - Current)/(Future + Current)",
+                 ylab ="Adaptive capacity",
                  alpha = 0.6,
                  ncol=3,
                  zero_line=TRUE,
                  scale= "free",
                  logx = TRUE,
                  show_correlation = TRUE,
-                 outfile = file_out("outputs/fig7.pdf"),
+                 outfile = file_out("outputs/suppfig_spptraits.png"),
                  width = 7,
                  height = 6),
   # Fig supp
-  supp_fig_cat_traits =
+  suppfig_cattraits =
     plot_scatter(data = plant_spp_summary,
                  response = "mean_AC",
                  predictor = c("Growth_form",
@@ -192,13 +194,13 @@ plan <- drake::drake_plan(
                                       "Pollinator",
                                       "Dispersal~mode"),
                  xlab ="Categorical traits",
-                 ylab = "(Future - Current)/(Future + Current)",
+                 ylab = "Adaptive capacity",
                  alpha = 0.6,
                  ncol=2,
                  zero_line= TRUE,
                  scale="free",
                  logx = FALSE,
-                 outfile = file_out("outputs/supp_fig_cat_traits.pdf"),
+                 outfile = file_out("outputs/suppfig_cattraits.png"),
                  width = 7,
                  height = 7)
 )

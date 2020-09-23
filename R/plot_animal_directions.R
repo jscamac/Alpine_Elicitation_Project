@@ -30,7 +30,7 @@ plot_animal_directions <- function(data,
                   lab = paste0(Plot_ID,". ",Species, " (", N,"; ",intToUtf8(shape, multiple=TRUE),")"),
                   lab = ifelse(Direction=="Decrease", lab, NA))
   
-  p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species, rank), y=Responses_prop, label = lab)) +
+  p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species_short, rank), y=Responses_prop, label = lab)) +
     ggplot2::geom_bar(stat='identity', ggplot2::aes(fill=Direction), width= 0.5) +
     scale_x_discrete(expand=c(0,1)) +
     ggplot2::geom_text(ggplot2::aes(y=0), position='identity',  size=2,  vjust = -0.7, hjust = -0.05, 

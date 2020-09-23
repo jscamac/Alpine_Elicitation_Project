@@ -14,7 +14,7 @@ The repository also contains the code used to summarise the data and create main
 
 ## Reproducing analyses
 
-This analysis requires R 3.6 or higher to be installed as well as `dplyr`, `drake`, `tidyr`,`ggplot2` and `cowplot` packages to be installed.
+This analysis requires R 3.6 or higher to be installed as well as `dplyr`, `drake`, `tidyr`,`ggplot2`, `ggrepel` and `cowplot` packages to be installed.
 
 In order to maximise the reproducibility of our analyses, we've implemented the code in a make-like workflow using the R package drake.
 To reporduce the analysis simply download this repository and open R in the downloaded directory. Then simply run:
