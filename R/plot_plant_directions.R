@@ -26,7 +26,7 @@ plot_plant_directions <- function(data,
                                                                    Moss = "9830",
                                                                    Shrub = "9650",
                                                                    Tree = "9660")),
-                    lab = paste0(Spp_id,". ",Spp_short, " (",intToUtf8(shape, multiple=TRUE),")"),
+                    lab = paste0(Spp_id,". ",Species_name, " (",intToUtf8(shape, multiple=TRUE),")"),
                     lab = ifelse(Direction=="Decrease", lab, NA))
     
     p1 <- ggplot2::ggplot(data, ggplot2::aes(x=reorder(Species_name, rank), y=Responses_prop, label = lab)) +
@@ -48,7 +48,8 @@ plot_plant_directions <- function(data,
   }
   
   out <- p1 +
-    ggplot2::scale_fill_manual(values = c(Decrease = "#E69F00", 
+    ggplot2::scale_fill_manual("",
+                               values = c(Decrease = "#E69F00", 
                                           `No change` = "#CC79A7", 
                                           Increase = "#0072B2"),
                                breaks=c("Decrease","No change","Increase")) +

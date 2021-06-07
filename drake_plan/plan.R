@@ -114,7 +114,7 @@ plan <- drake::drake_plan(
                        dplyr::select(-N)) %>%
     dplyr::bind_rows(summarise_elevrange(data = animal_data) %>%
                        dplyr::mutate(elev_type = "Elevation range")) %>%
-    dplyr::filter(!SPP_ID %in% c(20, 21)),
+    dplyr::filter(!SPP_ID %in% c(22)), # Monistria concinna too uncertain to include
   
   # Fig 4 Animal elevation plots
   fig4 = 

@@ -43,13 +43,13 @@ plot_covers <- function(data,
   }
   
   if(isTRUE(add_labels) & type == "species") {
-    out <- out + geom_text_repel(ggplot2::aes(label=Spp_id),box.padding=1.5, force=3, size=3,colour = "red", segment.alpha=0.5, 
-                                 segment.size = 0.3, min.segment.length = 0.1) 
+    out <- out + geom_text_repel(ggplot2::aes(label=Spp_id),box.padding=0.5, force=3, size=2,colour = "red", segment.alpha=1, 
+                                 segment.size = 0.3, min.segment.length = 0.0001, max.overlaps =Inf) 
   }
   
   if(isTRUE(add_labels) & type == "community") {
-    out <- out + geom_text_repel(ggplot2::aes(label=Community), box.padding=0.5, colour = "red",force=2, size=2, segment.alpha=0.5,
-                                 segment.size = 0.3, min.segment.length = 0.1) 
+    out <- out + geom_text_repel(ggplot2::aes(label=Community), box.padding=0.5, colour = "red",force=2, size=2, segment.alpha=1,
+                                 segment.size = 0.3, min.segment.length = 0.001, max.overlaps =Inf) 
   }
   
   # outfile supplied

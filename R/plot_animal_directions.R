@@ -45,7 +45,8 @@ plot_animal_directions <- function(data,
   }
   
   out <- p1 + 
-    ggplot2::scale_fill_manual(values = c(Decrease = "#E69F00", 
+    ggplot2::scale_fill_manual("",
+                               values = c(Decrease = "#E69F00", 
                                           `No change` = "#CC79A7", 
                                           Increase = "#0072B2"),
                                breaks=c("Decrease","No change","Increase"))  +
