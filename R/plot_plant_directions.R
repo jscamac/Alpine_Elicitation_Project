@@ -74,7 +74,7 @@ plot_plant_directions <- function(data,
     if(!dir.exists(dirname(outfile))) {
       dir.create(dirname(outfile), recursive = TRUE)
     }
-    ggplot2::ggsave(filename =  outfile, width = width, height = height, units = units, plot = out)
+    ggplot2::ggsave(filename =  outfile, width = width, height = height, units = units, plot = out, dpi=600)
   } else {
     out
   }

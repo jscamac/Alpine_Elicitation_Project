@@ -22,12 +22,13 @@ plan <- drake::drake_plan(
                                     type = "community"),
                         nrow=2,
                         align="v",
-                        labels ="AUTO",
+                        labels =c("(a)","(b)"),
                         rel_heights = c(1.25, 1)),
                     width = 5,
                     height = 5,
                     filename = file_out("outputs/fig1.png"),
                     #device=cairo_png, 
+                    dpi = 600,
                     family ="Arial Unicode MS")),
   
   # SPECIES DATA
@@ -52,12 +53,12 @@ plan <- drake::drake_plan(
                                     type = "species"),
                         nrow=2,
                         align="v",
-                        labels ="AUTO",
-                        hjust =-3),
+                        labels =c("(a)","(b)")),
                     width = 11.69,
                     height = 8.27,
                     filename = file_out("outputs/fig2.png"),
                     #device=cairo_pdf, 
+                    dpi = 600,
                     family ="Arial Unicode MS")),
   
   
@@ -91,11 +92,11 @@ plan <- drake::drake_plan(
                      xlabel = expression(paste("Current abundance (100",~m^2, ")"))),
         nrow=2,
         align="v",
-        labels ="AUTO",
-        hjust =-3),
+        labels =c("(a)","(b)")),
         width = 7.25,
         height = 7.25,
         filename = file_out("outputs/fig3.png"),
+        dpi = 600,
         #device= cairo_pdf, 
         family ="Arial Unicode MS")),
   
